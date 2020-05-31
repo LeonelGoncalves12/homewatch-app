@@ -1,0 +1,7 @@
+export let isCordovaAvailable = () => {
+  if (!window.cordova)
+  {
+    return false;
+  }
+  return true;
+};

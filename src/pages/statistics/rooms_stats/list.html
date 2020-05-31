@@ -1,0 +1,112 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{homesLabel}} & {{roomsLabel}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content [ngClass]="{ 'homepage': theme == 'default', 'homepageRedTheme': theme=='red' , 'homepageGreenTheme': theme=='green' }">
+  <div class='content space' style="height: 100%">
+    <div *ngIf="loading" class="loadingContainter">
+      <img class="loadingElement" src="./assets/loadingGif.svg">
+    </div>
+    <div *ngIf="!loading" style="height: 100%">
+
+      <div class="div-slides" style=" margin:auto; width: 60% ; background: none; height: 19vh !important;">
+        <ion-slides slidesPerView="2" spaceBetween="1" class="lineborders"
+                    style="padding-bottom: 2vh; border: 0; background: none">
+          <ion-slide style="margin-bottom: 3vh">
+            <div class="roomicon" (click)="onTypeChange('homes')">
+              <div style="height:8vh">
+                <img src="./assets/home-icon.png" style="width: 7vh !important;height: 7vh !important;"
+                [ngClass]="[ typeActive == 'homes' ? theme == 'default' ? 'active_slideColumn' : theme == 'red' ? 'active_slideColumnRedTheme' :   theme == 'green' ? 'active_slideColumnGreenTheme' : '' : typeActive != 'homes' ? theme == 'default' ? 'slideColumn' : theme == 'red' ? 'slideColumnRedTheme' :   theme == 'green' ? 'slideColumnGreenTheme' : '' :'']" >
+              </div>
+            </div>
+            <p class="centertitle text">
+              {{homesLabel}}
+            </p>
+          </ion-slide>
+
+          <ion-slide>
+            <div class="roomicon" (click)="onTypeChange('rooms')">
+              <div style="height:8vh">
+                <img src="./assets/bedroom-icon.png" style="width: 7vh !important;height: 7vh !important;"
+                     [ngClass]="[ typeActive == 'rooms' ? theme == 'default' ? 'active_slideColumn' : theme == 'red' ? 'active_slideColumnRedTheme' :   theme == 'green' ? 'active_slideColumnGreenTheme' : '' : typeActive != 'rooms' ? theme == 'default' ? 'slideColumn' : theme == 'red' ? 'slideColumnRedTheme' :   theme == 'green' ? 'slideColumnGreenTheme' : '' :'']" >
+              </div>
+
+            </div>
+            <p class="centertitle text">
+              {{roomsLabel}}
+            </p>
+          </ion-slide>
+        </ion-slides>
+      </div>
+
+      <div *ngIf="type === 'homes'" class="underSlides" style="margin-top: 2vh">
+        <div *ngIf="CountHomes == 0" class="containerCenter">
+          <div class="text childCenter">
+            <div class="text" style="margin:0;font-size: 2vh">
+              You have no homes.
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="CountHomes > 0">
+          <ion-row class="full2 " [ngClass]="{ 'module': theme == 'default',  'moduleRedTheme': theme=='red' , 'moduleGreenTheme': theme=='green' }">
+            <ion-col col-2 class="roomicon">
+              <img src="./assets/home-icon.png" class="iconTimedTasks">
+            </ion-col>
+            <ion-col style="margin: auto">
+              <div class="textThingsRoom">{{numberOfLabel}} {{homesLabel}}: {{CountHomes}}</div>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="full2 " style="margin-top: 1vh" [ngClass]="{ 'module': theme == 'default',  'moduleRedTheme': theme=='red' , 'moduleGreenTheme': theme=='green' }">
+            <ion-col col-2 class="roomicon">
+              <img src="./assets/home-icon.png" class="iconTimedTasks">
+            </ion-col>
+            <ion-col style="margin: auto">
+              <div class="textThingsRoom">{{favoriteHomeLabel}}: {{FavoriteHome}}</div>
+            </ion-col>
+          </ion-row>
+        </div>
+      </div>
+
+      <div *ngIf="type === 'rooms'" class="underSlides" style="margin-top: 2vh">
+        <div *ngIf="CountRooms == 0" class="containerCenter">
+          <div class="text childCenter">
+            <div class="text" style="margin:0;font-size: 2vh">
+              You have no rooms.
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="CountRooms > 0">
+          <ion-row class="full2 "  [ngClass]="{ 'module': theme == 'default',  'moduleRedTheme': theme=='red' , 'moduleGreenTheme': theme=='green' }">
+            <ion-col col-2 class="roomicon">
+              <img src="./assets/bedroom-icon.png" class="iconTimedTasks">
+            </ion-col>
+            <ion-col style="margin: auto">
+              <div class="textThingsRoom">{{numberOfLabel}} {{roomsLabel}}: {{CountRooms}}</div>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="full2 " style="margin-top: 1vh"  [ngClass]="{ 'module': theme == 'default',  'moduleRedTheme': theme=='red' , 'moduleGreenTheme': theme=='green' }">
+            <ion-col col-2 class="roomicon">
+              <img src="./assets/bedroom-icon.png" class="iconTimedTasks">
+            </ion-col>
+            <ion-col style="margin: auto">
+              <div class="textThingsRoom">{{favoriteRoomLabel}}: {{FavoriteRoom}}</div>
+            </ion-col>
+          </ion-row>
+        </div>
+      </div>
+
+
+    </div>
+
+  </div>
+
+
+</ion-content>

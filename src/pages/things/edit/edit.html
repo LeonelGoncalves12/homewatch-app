@@ -1,0 +1,53 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{deviceLabel}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content [ngClass]="{ 'homepage': theme == 'default', 'homepageRedTheme': theme=='red' , 'homepageGreenTheme': theme=='green' }">
+  <div class='content' style="height: 100%">
+    <div [hidden]="loading && !failed" style="margin-top: 1vh">
+      <button *ngIf="editMode" style="float: right; right: 5%; margin-top: 1vh;margin-bottom: 1vh;width: 26vw"
+              class='seeall oversize' [ngClass]="{ 'seeallDefaultTheme': theme == 'default', 'seeallRedTheme': theme=='red' , 'seeallGreenTheme': theme=='green' }"
+              [disabled]="using" (click)="removeThing()">{{removeDeviceLabel}}
+      </button>
+    </div>
+    <div [hidden]="!loading" class="loadingContainter">
+      <img class="loadingElement" src="./assets/loadingGif.svg">
+    </div>
+    <div [hidden]="loading">
+      <div [hidden]="!failed" class="containerCenter">
+        <div class="text childCenter">
+          <div class="text" style="margin:0;font-size: 2vh">
+            {{somethingFailedLabel}}
+          </div>
+          <div class="text " style="margin-top: 2vh">
+            <button class='seeall' [ngClass]="{ 'seeallDefaultTheme': theme == 'default', 'seeallRedTheme': theme=='red' , 'seeallGreenTheme': theme=='green' }" (click)="tryAgain()" style="float: none">Try Again</button>
+          </div>
+        </div>
+      </div>
+      <div [hidden]="failed">
+        <div>
+
+          <div class='input-fields'>
+
+            <form [formGroup]="thingForm" (ngSubmit)="onSubmit(thingForm)">
+              <ion-input type='text' placeholder='Name' class='input-line full-width' formControlName="name">
+              </ion-input>
+              <button class='ghost-round full-width' [disabled]="!thingForm.valid">{{saveLabel}}</button>
+            </form>
+          </div>
+
+          <div [hidden]="!editMode" style="margin-top: 1vh">
+            <div [hidden]="thingUnavailable">
+              <ng-template #thingStatus></ng-template>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

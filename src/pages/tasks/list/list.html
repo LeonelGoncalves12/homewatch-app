@@ -1,0 +1,42 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{tasksLabel}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content [ngClass]="{ 'homepage': theme == 'default', 'homepageRedTheme': theme=='red' , 'homepageGreenTheme': theme=='green' }">
+  <div class='content space' style="height: 100%">
+    <button style="float: right; right: 5%;margin-bottom: 1vh" class='seeall'  [ngClass]="{ 'seeallDefaultTheme': theme == 'default', 'seeallRedTheme': theme=='red' , 'seeallGreenTheme': theme=='green' }" (click)="newTask()">{{newTaskLabel}}</button>
+
+    <div class="newtoolbar" >
+      <ion-toolbar class="toolbarTasks" [ngClass]="{ 'defaultTheme': theme == 'default', 'redTheme': theme=='red' , 'greenTheme': theme=='green' }">
+        <ion-segment [(ngModel)]="tasks_type" (ngModelChange)="onTypeChange($event)">
+          <ion-segment-button value="timed">
+            {{timedLabel}}
+          </ion-segment-button>
+          <ion-segment-button value="triggered">
+            {{triggeredLabel}}
+          </ion-segment-button>
+        </ion-segment>
+      </ion-toolbar>
+    </div>
+    <div *ngIf="loading" class="loadingContainter">
+      <img class="loadingElement" src="./assets/loadingGif.svg">
+    </div>
+    <div *ngIf="!loading" style="height: 100%">
+      <div [ngSwitch]="tasks_type" style="height: 100%">
+        <div class="task-list" *ngSwitchCase="'timed'" style="height: 40%">
+          <list-timed-tasks-page [tasks]="timed_tasks" style="height: 100%"></list-timed-tasks-page>
+        </div>
+
+
+        <div class="task-list" *ngSwitchCase="'triggered'" style="height: 40%">
+          <list-triggered-tasks-page [tasks]="triggered_tasks" style="height: 100%"></list-triggered-tasks-page>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

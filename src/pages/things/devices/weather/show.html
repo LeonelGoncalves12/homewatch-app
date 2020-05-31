@@ -1,0 +1,69 @@
+<ion-row class="center" style="width: 60%">
+  <div class="onoffswitch center">
+    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch1" checked>
+    <label class="onoffswitch-label"   for="myonoffswitch1" (click)="chooseSensor('cloudy')">
+      <span class="weather-inner" [ngClass]="{ 'slideActive': sensor=='cloudy'}">CLOUDY?</span>
+    </label>
+  </div>
+
+
+  <div class="onoffswitch center">
+    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch2" checked>
+    <label class="onoffswitch-label"  for="myonoffswitch2" (click)="chooseSensor('raining')">
+      <span class="weather-inner"  [ngClass]="{ 'slideActive': sensor=='raining'}" >RAINING?</span>
+    </label>
+  </div>
+
+</ion-row>
+
+<ion-row class="center" style="width: 60%;margin-top: 1vh">
+
+  <div class="onoffswitch center">
+    <div class="onoffswitch-label"   [ngClass]="{ 'sensorActive': sensor=='temperature'}" for="myonoffswitch3">
+
+      <div *ngIf="sensor=='temperature'">
+        <div style="height: 27px;width: 100px">
+          <ion-slides slidesPerView="4" spaceBetween="1" class="ion-slides-device">
+            <ion-slide *ngFor="let n of range(10, 36)" (click)="chooseIndex(n, 'temperature')"
+                       [ngClass]="{ 'slideActive': n == indexTemperature, 'slideInactive': n != indexTemperature }">
+              <p style="font-size: 17px"> {{n}}</p>
+
+            </ion-slide>
+          </ion-slides>
+        </div>
+      </div>
+      <div *ngIf="sensor!='temperature'">
+        <div style="height: 27px;width: 100px">
+          <span class="weather-inner" (click)="chooseSensor('temperature')">TEMPERATURE</span>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+
+
+  <div class="onoffswitch center" >
+    <div class="onoffswitch-label"  [ngClass]="{ 'sensorActive': sensor=='windSpeed'}" for="myonoffswitch4">
+
+      <div *ngIf="sensor=='windSpeed'">
+        <div style="height: 27px;width: 100px">
+          <ion-slides slidesPerView="4" spaceBetween="1" class="ion-slides-device">
+            <ion-slide *ngFor="let n of range(50, 60)" (click)="chooseIndex(n, 'windSpeed')"
+                       [ngClass]="{ 'slideActive': n == indexWind, 'slideInactive': n != indexWind }">
+              <p style="font-size: 17px"> {{n}}</p>
+            </ion-slide>
+          </ion-slides>
+        </div>
+      </div>
+      <div *ngIf="sensor!='windSpeed'">
+        <div style="height: 27px;width: 100px">
+          <span class="weather-inner" (click)="chooseSensor('windSpeed')">WIND</span>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+
+</ion-row>

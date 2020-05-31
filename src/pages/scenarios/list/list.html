@@ -1,0 +1,143 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{scenariosLabel}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content
+  [ngClass]="{ 'homepage': theme == 'default', 'homepageRedTheme': theme=='red' , 'homepageGreenTheme': theme=='green' }">
+  <div class='content space' style="height: 100%">
+    <div *ngIf="loading" class="loadingContainter">
+      <img class="loadingElement" src="./assets/loadingGif.svg">
+    </div>
+    <div *ngIf="!loading" style="height: 100%">
+
+      <div *ngIf="scenarios.length == 0" class="containerCenter" style="margin-top: 4vh">
+        <div class="text childCenter">
+          <div class="text" style="margin:0;font-size: 2vh">
+            You have no scenarios in this home.
+          </div>
+          <div class="text " style="margin:0;font-size: 2vh">
+            Add one right now.
+          </div>
+          <div class="text " style="margin-top: 2vh">
+            <button class='seeall oversize'
+                    [ngClass]="{ 'seeallDefaultTheme': theme == 'default', 'seeallRedTheme': theme=='red' , 'seeallGreenTheme': theme=='green' }"
+                    (click)="newScenario()" style="float: none">New Scenario
+            </button>
+          </div>
+        </div>
+      </div>
+
+
+      <div *ngIf="scenarios.length > 0">
+
+        <ion-row class="full">
+          <div class="centertitle" style="margin-top: 3vh;">
+            <h1>{{scenariosLabel}}</h1>
+          </div>
+          <button style="float: right;position: absolute; right: 5%;" class='seeall oversize'
+                  [ngClass]="{ 'seeallDefaultTheme': theme == 'default', 'seeallRedTheme': theme=='red' , 'seeallGreenTheme': theme=='green' }"
+                  (click)="newScenario()">{{newScenarioLabel}}
+          </button>
+        </ion-row>
+
+        <div class="div-slides" style="margin-top: 1vh;">
+          <ion-slides slidesPerView="3" spaceBetween="1" class="lineborders" style="padding-bottom: 2vh"
+                      [ngClass]="{ 'slides': theme == 'default',  'slidesRedTheme': theme=='red' , 'slidesGreenTheme': theme=='green' }">
+            <ion-slide *ngFor="let scenario of scenarios" ion-long-press [interval]="1000"
+                       (onPressing)="editScenario(scenario)">
+              <ion-row class="roomicon" (click)="chooseScenario(scenario)">
+                <div class="centertitle">
+                  <div *ngIf="scenario.icon === '1'">
+                    <img src="./assets/popcorn.png"
+                         [ngClass]="[ scenarioIndex == scenario.id ? theme == 'default' ? 'active_slideColumn' : theme == 'red' ? 'active_slideColumnRedTheme' :   theme == 'green' ? 'active_slideColumnGreenTheme' : '' : scenarioIndex != scenario.id ? theme == 'default' ? 'slideColumn' : theme == 'red' ? 'slideColumnRedTheme' :   theme == 'green' ? 'slideColumnGreenTheme' : '' :'']">
+                  </div>
+                  <div *ngIf="scenario.icon === '2'">
+                    <img src="./assets/Light_color.png"
+                         [ngClass]="[ scenarioIndex == scenario.id ? theme == 'default' ? 'active_slideColumn' : theme == 'red' ? 'active_slideColumnRedTheme' :   theme == 'green' ? 'active_slideColumnGreenTheme' : '' : scenarioIndex != scenario.id ? theme == 'default' ? 'slideColumn' : theme == 'red' ? 'slideColumnRedTheme' :   theme == 'green' ? 'slideColumnGreenTheme' : '' :'']">
+                  </div>
+                  <div *ngIf="scenario.icon === '3'">
+                    <img src="./assets/Lock.ico"
+                         [ngClass]="[ scenarioIndex == scenario.id ? theme == 'default' ? 'active_slideColumn' : theme == 'red' ? 'active_slideColumnRedTheme' :   theme == 'green' ? 'active_slideColumnGreenTheme' : '' : scenarioIndex != scenario.id ? theme == 'default' ? 'slideColumn' : theme == 'red' ? 'slideColumnRedTheme' :   theme == 'green' ? 'slideColumnGreenTheme' : '' :'']">
+                  </div>
+                </div>
+              </ion-row>
+              <ion-row class="centertitle text margin1vh">
+                <div class="centertitle">
+                  {{scenario.name}}
+                </div>
+              </ion-row>
+            </ion-slide>
+          </ion-slides>
+        </div>
+
+        <ion-row class="full">
+          <div class="centertitle" style="margin-top: 7vh;">
+            <h1>{{scenariosDevicesLabel}}</h1>
+          </div>
+          <button *ngIf="scenarioThings.length > 0" style="float: right;position: absolute; right: 5%;" class='seeall oversize'
+                  [ngClass]="{ 'seeallDefaultTheme': theme == 'default', 'seeallRedTheme': theme=='red' , 'seeallGreenTheme': theme=='green' }"
+                  (click)="showScenario(scenario)">{{editDevicesLabel}}
+          </button>
+        </ion-row>
+        <div *ngIf="scenario" style="margin-top: 1vh" class="underSlides">
+
+
+          <div *ngIf="scenarioThings.length == 0" class="containerCenter" style="margin-top: 4vh">
+            <div class="text childCenter">
+              <div class="text" style="margin:0;font-size: 2vh">
+                You have no things in this scenario.
+              </div>
+              <div class="text " style="margin:0;font-size: 2vh">
+                Add one right now.
+              </div>
+              <div class="text " style="margin-top: 2vh">
+                <button class='seeall oversize'
+                        [ngClass]="{ 'seeallDefaultTheme': theme == 'default', 'seeallRedTheme': theme=='red' , 'seeallGreenTheme': theme=='green' }"
+                        (click)="showScenario(scenario)" style="float: none">{{addDeviceLabel}}
+                </button>
+              </div>
+            </div>
+          </div>
+
+
+          <div *ngIf="scenarioThings.length > 0">
+            <div *ngFor="let thing of scenarioThings">
+              <ion-row class="full2" style="margin-bottom: 1vh"
+                       [ngClass]="{ 'module': theme == 'default',  'moduleRedTheme': theme=='red' , 'moduleGreenTheme': theme=='green' }">
+                <ion-col col-2 class="roomicon">
+                  <div *ngIf="thing.thing.type === 'Things::Light'">
+                    <img src="./assets/Light_color.png" class="iconTimedTasks">
+                  </div>
+                  <div *ngIf="thing.thing.type === 'Things::Lock'">
+                    <img src="./assets/Lock.ico" class="iconTimedTasks">
+                  </div>
+                  <div *ngIf="thing.thing.type === 'Things::Thermostat'">
+                    <img src="./assets/thermostat_icon.png" class="iconTimedTasks">
+
+                  </div>
+                  <div *ngIf="thing.thing.type === 'Things::MotionSensor'">
+                    <img src="./assets/motion_sensor.png" class="iconTimedTasks">
+                  </div>
+                  <div *ngIf="thing.thing.type === 'Things::Weather'">
+                    <img src="./assets/weather-icon-png-11063.png" class="iconTimedTasks">
+                  </div>
+                </ion-col>
+                <ion-col style="margin: auto">
+                  <div class="textThingsName">{{thing.thing.name}}</div>
+                  <div class="textThingsRoom">{{thing.thing.room.name}}</div>
+                </ion-col>
+              </ion-row>
+            </div>
+            <button class='ghost-round full-width' (click)="applyScenario()" style="margin-top: 5vh">{{applyScenarioLabel}}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

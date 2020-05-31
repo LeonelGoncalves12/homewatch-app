@@ -1,0 +1,355 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Homes</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content
+  [ngClass]="{ 'homepage': theme == 'default', 'homepageRedTheme': theme=='red' , 'homepageGreenTheme': theme=='green' }">
+  <div class='content space' style="height: 100%">
+    <div *ngIf="loading" class="loadingContainter">
+      <img class="loadingElement" src="./assets/loadingGif.svg">
+    </div>
+    <div *ngIf="!loading" style="height: 100%">
+      <div *ngIf="failed" class="containerCenter">
+        <div class="text childCenter">
+          <div class="text" style="margin:0;font-size: 2vh">
+            {{somethingFailedLabel}}
+          </div>
+          <div class="text " style="margin-top: 2vh">
+            <button class='seeall'
+                    [ngClass]="{ 'seeallDefaultTheme': theme == 'default', 'seeallRedTheme': theme=='red' , 'seeallGreenTheme': theme=='green' }"
+                    (click)="tryAgain()" style="float: none;margin-right: 3px">{{tryAgainLabel}}
+            </button>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="!failed">
+        <ion-row class="full" style="margin-bottom: 10px">
+          <ion-col col-6></ion-col>
+          <ion-col col-6>
+            <div>
+              <button class='seeall full-width'
+                      [ngClass]="{ 'seeallDefaultTheme': theme == 'default', 'seeallRedTheme': theme=='red' , 'seeallGreenTheme': theme=='green' }"
+                      (click)="newHome()">{{addHomeLabel}}
+              </button>
+            </div>
+          </ion-col>
+        </ion-row>
+
+        <ng-container *ngFor="let home of homes">
+          <div *ngIf="home.id == indexHome">
+            <ion-row class="full2" style="height: 14vh">
+              <ion-col col-4>
+                <img #uploadedIMG src="./assets/Home-icon (2).png" class="imageHomeList">
+              </ion-col>
+              <ion-col col-7 class="info">
+                <label class="bio">{{addressLabel}}</label>
+                <p>{{home.address}}</p>
+                <label class="bio">{{cityLabel}}</label>
+                <p>{{home.location}}</p>
+              </ion-col>
+              <ion-col col-1><img src="./assets/edit.png" style="height:15px" (click)="editHome(home)"></ion-col>
+            </ion-row>
+
+
+            <div class="div-slides " style="margin-top: 2vh;">
+              <ion-slides slidesPerView="auto" spaceBetween="1" class="lineborders"
+                          [ngClass]="{ 'slides': theme == 'default',  'slidesRedTheme': theme=='red' , 'slidesGreenTheme': theme=='green' }">
+                <ion-slide>
+                  <ion-row class="roomicon" (click)="chooseType('rooms')">
+                    <div class="centertitle">
+                      <img src="./assets/bedroom-icon.png"
+                           [ngClass]="[ type == 'rooms' ? theme == 'default' ? 'active_slideColumn' : theme == 'red' ? 'active_slideColumnRedTheme' :   theme == 'green' ? 'active_slideColumnGreenTheme' : '' : type != 'rooms' ? theme == 'default' ? 'slideColumn' : theme == 'red' ? 'slideColumnRedTheme' :   theme == 'green' ? 'slideColumnGreenTheme' : '' :'']">
+                    </div>
+                  </ion-row>
+                  <ion-row class="centertitle text margin1vh">
+                    <div class="centertitle">
+                      {{roomsLabel}}
+                    </div>
+                  </ion-row>
+                </ion-slide>
+
+                <ion-slide>
+                  <ion-row class="roomicon" (click)="chooseType('things')">
+                    <div class="centertitle">
+                      <img src="./assets/Light_color.png"
+                           [ngClass]="[ type == 'things' ? theme == 'default' ? 'active_slideColumn' : theme == 'red' ? 'active_slideColumnRedTheme' :   theme == 'green' ? 'active_slideColumnGreenTheme' : '' : type != 'things' ? theme == 'default' ? 'slideColumn' : theme == 'red' ? 'slideColumnRedTheme' :   theme == 'green' ? 'slideColumnGreenTheme' : '' :'']">
+                    </div>
+                  </ion-row>
+                  <ion-row class="centertitle text margin1vh">
+                    <div class="centertitle">
+                      {{devicesLabel}}
+                    </div>
+                  </ion-row>
+                </ion-slide>
+
+                <ion-slide>
+                  <ion-row class="roomicon" (click)="chooseType('scenarios')">
+                    <div class="centertitle">
+                      <img src="./assets/popcorn.png"
+                           [ngClass]="[ type == 'scenarios' ? theme == 'default' ? 'active_slideColumn' : theme == 'red' ? 'active_slideColumnRedTheme' :   theme == 'green' ? 'active_slideColumnGreenTheme' : '' : type != 'scenarios' ? theme == 'default' ? 'slideColumn' : theme == 'red' ? 'slideColumnRedTheme' :   theme == 'green' ? 'slideColumnGreenTheme' : '' :'']">
+                    </div>
+                  </ion-row>
+                  <ion-row class="centertitle text margin1vh">
+                    <div class="centertitle">
+                      {{scenariosLabel}}
+                    </div>
+                  </ion-row>
+                </ion-slide>
+
+                <ion-slide>
+                  <ion-row class="roomicon" (click)="chooseType('tasks')">
+                    <div class="centertitle">
+                      <img src="./assets/tasks.ico"
+                           [ngClass]="[ type == 'tasks' ? theme == 'default' ? 'active_slideColumn' : theme == 'red' ? 'active_slideColumnRedTheme' :   theme == 'green' ? 'active_slideColumnGreenTheme' : '' : type != 'tasks' ? theme == 'default' ? 'slideColumn' : theme == 'red' ? 'slideColumnRedTheme' :   theme == 'green' ? 'slideColumnGreenTheme' : '' :'']">
+                    </div>
+                  </ion-row>
+                  <ion-row class="centertitle text margin1vh">
+                    <div class="centertitle">
+                      {{tasksLabel}}
+                    </div>
+                  </ion-row>
+                </ion-slide>
+              </ion-slides>
+            </div>
+            <div style="overflow-y: scroll;height: 50vh;padding-top: 2vh">
+              <div *ngIf="loading" class="loadingContainter">
+                <img class="loadingElement" src="./assets/loadingGif.svg">
+              </div>
+              <div *ngIf="!loading" style="height: 100%">
+                <div *ngIf="failed" class="containerCenter">
+                  <div class="text childCenter">
+                    <div class="text" style="margin:0;font-size: 2vh">
+                      {{somethingFailedLabel}}
+                    </div>
+                    <div class="text " style="margin-top: 2vh">
+                      <button class='seeall oversize'
+                              [ngClass]="{ 'seeallDefaultTheme': theme == 'default', 'seeallRedTheme': theme=='red' , 'seeallGreenTheme': theme=='green' }"
+                              (click)="tryAgain()" style="float: none">Try Again
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="!loading">
+                  <div class="full2" *ngIf="type=='rooms'">
+                    <div class="underSlides ">
+                      <ng-container *ngFor=" let room of rooms; ">
+                        <ion-row *ngIf="home.id === room.home.id" class="full2 " style="margin-top: 1vh"
+                                 [ngClass]="{ 'module': theme == 'default',  'moduleRedTheme': theme=='red' , 'moduleGreenTheme': theme=='green' }"
+                                 (click)="listRooms(home)">
+                          <ion-col col-3 class="roomicon">
+                            <div *ngIf="room.icon == '1'">
+                              <img src="./assets/kitchen2.png" class="slideColumnHomes">
+                            </div>
+                            <div *ngIf="room.icon == '2'">
+                              <img src="./assets/bedroom-icon.png" class="slideColumnHomes">
+                            </div>
+                            <div *ngIf="room.icon == '3'">
+                              <img src="./assets/Bathroom_Objects_-_Ultra_Color_-_002_-_Toilet_Side-512.png"
+                                   class="slideColumnHomes">
+                            </div>
+                            <div *ngIf="room.icon == '4'">
+                              <img src="./assets/livingRoomIcon.png" class="slideColumnHomes">
+                            </div>
+                            <div *ngIf="room.icon == '5'">
+                              <img src="./assets/dinnerRoomIcon.png" class="slideColumnHomes">
+                            </div>
+                            <div *ngIf="room.icon == '6'">
+                              <img src="./assets/garageIcon.png" class="slideColumnHomes">
+                            </div>
+                            <div *ngIf="room.icon == '7'">
+                              <img src="./assets/garden.png" class="slideColumnHomes">
+                            </div>
+                          </ion-col>
+                          <ion-col col-9 class="centertitle text" style="text-align: left">
+                            {{room.name}}
+                          </ion-col>
+                        </ion-row>
+                      </ng-container>
+
+                      <div *ngIf="home.numberRooms == 0" class="containerCenter" style="margin-top: 4vh">
+                        <div class="text childCenter">
+                          <div class="text" style="margin:0;font-size: 2vh">
+                            You don't have rooms on this home.
+                          </div>
+                          <div class="text " style="margin:0;font-size: 2vh">
+                            Add one right now.
+                          </div>
+                          <div class="text " style="margin-top: 2vh">
+                            <button class='seeall oversize'
+                                    [ngClass]="{ 'seeallDefaultTheme': theme == 'default', 'seeallRedTheme': theme=='red' , 'seeallGreenTheme': theme=='green' }"
+                                    (click)="newRoom(home)" style="float: none">New Room
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="full2" *ngIf="type=='things'">
+                    <div class="underSlides ">
+                      <ng-container *ngFor=" let thing of things; ">
+                        <ion-row *ngIf="home.id === thing.home" class="full2 " style="margin-top: 1vh"
+                                 [ngClass]="{ 'module': theme == 'default',  'moduleRedTheme': theme=='red' , 'moduleGreenTheme': theme=='green' }"
+                                 (click)="listRooms(home)">
+                          <ion-col col-3 class="roomicon">
+                            <div *ngIf="thing.type === 'Things::Light'">
+                              <img src="./assets/Light_color.png" class="slideColumnHomes"
+                                   [ngClass]="[ thing.status == null ? 'slideColumnNULL' :  thing.status.on === true ? 'slideColumnON' : 'slideColumnOFF']">
+                            </div>
+                            <div *ngIf="thing.type === 'Things::Lock'">
+                              <img src="./assets/Lock.ico" class="slideColumnHomes"
+                                   [ngClass]="[ thing.status == null ? 'slideColumnNULL' :  thing.status.locked === true ? 'slideColumnON' : 'slideColumnOFF']">
+                            </div>
+                            <div *ngIf="thing.type === 'Things::Thermostat'">
+                              <img src="./assets/thermostat_icon.png" class="slideColumnHomes">
+                            </div>
+                            <div *ngIf="thing.type === 'Things::MotionSensor'">
+                              <img src="./assets/motion_sensor.png" class="slideColumnHomes">
+                            </div>
+                            <div *ngIf="thing.type === 'Things::Weather'">
+                              <img src="./assets/weather-icon-png-11063.png" class="slideColumnHomes">
+                            </div>
+                          </ion-col>
+                          <ion-col col-9 class="centertitle text" style="text-align: left">
+                            {{thing.name}}
+                          </ion-col>
+                        </ion-row>
+                      </ng-container>
+
+                      <div *ngIf="home.numberRooms == 0" class="containerCenter" style="margin-top: 4vh">
+                        <div class="text childCenter">
+                          <div class="text" style="margin:0;font-size: 2vh">
+                            You don't have rooms on this home.
+                          </div>
+                          <div class="text " style="margin:0;font-size: 2vh">
+                            Add one right now.
+                          </div>
+                          <div class="text " style="margin-top: 2vh">
+                            <button class='seeall oversize'
+                                    [ngClass]="{ 'seeallDefaultTheme': theme == 'default', 'seeallRedTheme': theme=='red' , 'seeallGreenTheme': theme=='green' }"
+                                    (click)="newRoom(home)" style="float: none">New Room
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div *ngIf="home.numberRooms > 0 && home.numberThings ==0" class="containerCenter"
+                           style="margin-top: 4vh">
+                        <div class="text childCenter">
+                          <div class="text" style="margin:0;font-size: 2vh">
+                            You have no things in the rooms
+                          </div>
+                          <div class="text " style="margin:0;font-size: 2vh">
+                            Add one right now.
+                          </div>
+                          <div class="text " style="margin-top: 2vh">
+                            <button class='seeall oversize'
+                                    [ngClass]="{ 'seeallDefaultTheme': theme == 'default', 'seeallRedTheme': theme=='red' , 'seeallGreenTheme': theme=='green' }"
+                                    (click)="goToRoom(home)" style="float: none">New Thing
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="full2" *ngIf="type=='scenarios'">
+                    <div class="underSlides">
+                      <ng-container *ngFor=" let scenario of scenarios; ">
+                        <ion-row *ngIf="home.id === scenario.home" class="full2 " style="margin-top: 1vh"
+                                 [ngClass]="{ 'module': theme == 'default',  'moduleRedTheme': theme=='red' , 'moduleGreenTheme': theme=='green' }"
+                                 (click)="listScenarios(home)">
+                          <ion-col col-3 class="roomicon">
+                            <div *ngIf="scenario.icon === '1'">
+                              <img src="./assets/popcorn.png" class="slideColumnHomes">
+                            </div>
+                            <div *ngIf="scenario.icon === '2'">
+                              <img src="./assets/Light_color.png" class="slideColumnHomes">
+                            </div>
+                            <div *ngIf="scenario.icon === '3'">
+                              <img src="./assets/Lock.ico" class="slideColumnHomes">
+                            </div>
+                          </ion-col>
+                          <ion-col col-9 class="centertitle text" style="text-align: left">
+                            {{scenario.name}}
+                          </ion-col>
+                        </ion-row>
+                      </ng-container>
+
+                      <div *ngIf="home.numberScenarios == 0" class="containerCenter" style="margin-top: 4vh">
+                        <div class="text childCenter">
+                          <div class="text" style="margin:0;font-size: 2vh">
+                            You have no scenarios in the home.
+                          </div>
+                          <div class="text " style="margin:0;font-size: 2vh">
+                            Add one right now.
+                          </div>
+                          <div class="text " style="margin-top: 2vh">
+                            <button class='seeall oversize'
+                                    [ngClass]="{ 'seeallDefaultTheme': theme == 'default', 'seeallRedTheme': theme=='red' , 'seeallGreenTheme': theme=='green' }"
+                                    (click)="newScenario(home)" style="float: none">Add
+                              Scenario
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <div class="full2" *ngIf="type=='tasks'" (click)="listTasks(home)">
+                    <div class="underSlides">
+                      <ng-container *ngFor=" let task of tasks; ">
+                        <ion-row *ngIf="home.id === task.home" class="full2 " style="margin-top: 1vh"
+                                 [ngClass]="{ 'module': theme == 'default',  'moduleRedTheme': theme=='red' , 'moduleGreenTheme': theme=='green' }">
+                          <ion-col col-3 class="roomicon">
+                            <div>
+                              <img src="./assets/Clock-icon.png" class="slideColumnHomes">
+                            </div>
+                          </ion-col>
+                          <ion-col col-9 class="centertitle text" style="text-align: left">
+                            {{timedTasksLabel}} {{task.countTimed}}
+                          </ion-col>
+                        </ion-row>
+                        <ion-row *ngIf="home.id === task.home" class="full2" style="margin-top: 1vh"
+                                 [ngClass]="{ 'module': theme == 'default',  'moduleRedTheme': theme=='red' , 'moduleGreenTheme': theme=='green' }">
+                          <ion-col col-3 class="roomicon">
+                            <div>
+                              <img src="./assets/thunder.png" class="slideColumnHomes">
+                            </div>
+                          </ion-col>
+                          <ion-col col-9 class="centertitle text" style="text-align: left">
+                            {{triggeredTasksLabel}} {{task.countTriggered}}
+                          </ion-col>
+                        </ion-row>
+                      </ng-container>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+        <ion-row *ngIf="!loading && !failed" class="full" style="margin-top: 10px">
+          <div class="center">
+            <ion-col col-2 (click)="chooseHome('previous')">
+              <img *ngIf="minIndexHome!=indexHome" src="./assets/arrowLeft.png" class="icons">
+              <img *ngIf="minIndexHome==indexHome" src="./assets/arrowLeftDisable.png" class="icons">
+            </ion-col>
+            <ion-col col-2 (click)="chooseHome('next')">
+              <img *ngIf="maxIndexHome!=indexHome" src="./assets/arrowRight.png" class="icons">
+              <img *ngIf="maxIndexHome==indexHome" src="./assets/arrowRightDisable.png" class="icons">
+            </ion-col>
+          </div>
+        </ion-row>
+
+
+      </div>
+    </div>
+  </div>
+
+</ion-content>

@@ -1,0 +1,26 @@
+<!---
+<ion-item id="thing_status" class="nobackground">
+  <ion-label>On</ion-label>
+  <ion-toggle [(ngModel)]="status.on" (ngModelChange)="onStatusChange($event)"></ion-toggle>
+</ion-item>
+
+
+
+<div class="onoffswitch center"  id="thing_status" >
+  <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
+  <label class="onoffswitch-label" for="myonoffswitch" (click)="switch_on_off()">
+    <span class="onoffswitch-inner"></span>
+    <span class="onoffswitch-switch"></span>
+  </label>
+</div>
+
+--->
+
+<div class="onoffswitch center"  id="thing_status" >
+  <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch{{type}}" checked>
+  <label class="onoffswitch-label" for="myonoffswitch{{type}}" (click)="switch_on_off()">
+    <span *ngIf="inverse==true" class="onoffswitchinverse-inner"></span>
+    <span *ngIf="inverse==false" class="onoffswitch-inner"></span>
+    <span class="onoffswitch-switch"></span>
+  </label>
+</div>

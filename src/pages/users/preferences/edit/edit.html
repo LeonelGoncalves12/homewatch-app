@@ -1,0 +1,71 @@
+<ion-header>
+  <ion-navbar  #navbar>
+    <ion-title>
+      <div>{{preferencesLabel}}</div>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content  [ngClass]="{ 'homepage': theme == 'default', 'homepageRedTheme': theme=='red' , 'homepageGreenTheme': theme=='green' }">
+  <div style="height: 100%" class='content'>
+
+    <div style="height: 100%" class='input-fields'>
+      <div [hidden]="!loading" class="loadingContainter">
+        <img class="loadingElement" src="./assets/loadingGif.svg">
+      </div>
+      <div [hidden]="loading">
+        <div [hidden]="!failed" class="containerCenter">
+          <div class="text childCenter">
+            <div class="text" style="margin:0;font-size: 2vh">
+              {{somethingFailedLabel}}
+            </div>
+            <div class="text " style="margin-top: 2vh">
+              <button class='seeall' [ngClass]="{ 'seeallDefaultTheme': theme == 'default', 'seeallRedTheme': theme=='red' , 'seeallGreenTheme': theme=='green' }" (click)="tryAgain()" style="float: none">Try Again</button>
+            </div>
+          </div>
+        </div>
+        <div [hidden]="failed" style="margin-top: 10vh">
+          <ion-row  class="full2 " style="margin-top: 1vh" [ngClass]="{ 'module': theme == 'default',  'moduleRedTheme': theme=='red' , 'moduleGreenTheme': theme=='green' }" >
+            <ion-col col-3 class="roomicon">
+              <div >
+                <img src="./assets/theme.png" class="iconNotifications" [ngClass]="{ 'iconNotificationsDefaultTheme': theme == 'default',  'iconNotificationsRedTheme': theme=='red' , 'iconNotificationsGreenTheme': theme=='green' }">
+              </div>
+            </ion-col>
+            <ion-col col-4 class="centertitle text" style="text-align: left">
+             {{themeLabel}}
+            </ion-col>
+            <ion-col col-5 class="centertitle" style="text-align:right; padding-right: 4vw">
+              <img class="theme"   src="./assets/defaultTheme.PNG" (click)="chooseTheme('default')"
+                   [ngClass]="[ themeactive == 'default' ? 'activeBorder' :'']" >
+              <img style="margin-left: 1vh" class="theme" src="./assets/greenTheme.PNG" (click)="chooseTheme('green')"
+                   [ngClass]="[ themeactive == 'green' ? 'activeBorder' :'']" >
+              <img style="margin-left: 1vh" class="theme" src="./assets/redTheme.PNG" (click)="chooseTheme('red')"
+                   [ngClass]="[ themeactive == 'red' ? 'activeBorder' :'']" >
+            </ion-col>
+          </ion-row>
+
+          <ion-row  class="full2 " style="margin-top: 3vh" [ngClass]="{ 'module': theme == 'default',  'moduleRedTheme': theme=='red' , 'moduleGreenTheme': theme=='green' }" >
+            <ion-col col-3 class="roomicon">
+              <div >
+                <img src="./assets/language.jpg" class="iconNotifications" [ngClass]="{ 'iconNotificationsDefaultTheme': theme == 'default',  'iconNotificationsRedTheme': theme=='red' , 'iconNotificationsGreenTheme': theme=='green' }">
+              </div>
+            </ion-col>
+            <ion-col col-3 class="centertitle text" style="text-align: left">
+              {{languageLabel}}
+            </ion-col>
+            <ion-col col-6 class="centertitle" style="text-align:right; padding-right: 4vw">
+              <img class="theme" src="./assets/portugal.png" (click)="chooseLanguage('pt')"
+                   [ngClass]="[ languageactive == 'pt' ? 'activeBorder' :'']" >
+              <img style="margin-left: 1vh" class="theme" src="./assets/united_kingdom.png" (click)="chooseLanguage('en')"
+                   [ngClass]="[ languageactive == 'en' ? 'activeBorder' :'']" >
+              <img style="margin-left: 1vh" class="theme" src="./assets/spain.png" (click)="chooseLanguage('es')"
+                   [ngClass]="[ languageactive == 'es' ? 'activeBorder' :'']" >
+              <img style="margin-left: 1vh" class="theme" src="./assets/france.png" (click)="chooseLanguage('fr')"
+                   [ngClass]="[ languageactive == 'fr' ? 'activeBorder' :'']" >
+            </ion-col>
+          </ion-row>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

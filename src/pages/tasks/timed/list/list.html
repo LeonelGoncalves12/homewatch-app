@@ -1,0 +1,155 @@
+<div class="div-slides " style=" margin:auto; width: 60% ; background: #3680bb00">
+  <ion-slides slidesPerView="2" spaceBetween="1" class="lineborders"
+              style="padding-bottom: 2vh; border: 0; background: none">
+    <ion-slide style="margin-bottom: 3vh">
+      <div>
+        <ion-row class="roomicon" (click)="chooseType('thing')">
+          <div class="centertitle">
+            <img src="./assets/Light_color.png" style="width: 7vh !important;height: 7vh !important;"
+                 [ngClass]="[ typeIndex == 'things' ? theme == 'default' ? 'active_slideColumn' : theme == 'red' ? 'active_slideColumnRedTheme' :   theme == 'green' ? 'active_slideColumnGreenTheme' : '' : typeIndex != 'things' ? theme == 'default' ? 'slideColumn' : theme == 'red' ? 'slideColumnRedTheme' :   theme == 'green' ? 'slideColumnGreenTheme' : '' :'']">
+
+          </div>
+        </ion-row>
+      </div>
+      <ion-row class="centertitle text margin1vh">
+        <div class="centertitle">
+          {{devicesLabel}}
+        </div>
+      </ion-row>
+    </ion-slide>
+
+    <ion-slide>
+      <ion-row class="roomicon" (click)="chooseType('scenario')">
+        <div class="centertitle">
+          <img src="./assets/popcorn.png" style="width: 7vh !important;height: 7vh !important;"
+               [ngClass]="[ typeIndex == 'scenarios' ? theme == 'default' ? 'active_slideColumn' : theme == 'red' ? 'active_slideColumnRedTheme' :   theme == 'green' ? 'active_slideColumnGreenTheme' : '' : typeIndex != 'scenarios' ? theme == 'default' ? 'slideColumn' : theme == 'red' ? 'slideColumnRedTheme' :   theme == 'green' ? 'slideColumnGreenTheme' : '' :'']">
+        </div>
+
+      </ion-row>
+      <ion-row class="centertitle text margin1vh">
+        <div class="centertitle">
+          {{scenariosLabel}}
+        </div>
+      </ion-row>
+    </ion-slide>
+  </ion-slides>
+
+</div>
+
+<div *ngIf="timed_tasks.length == 0" class="containerCenter">
+  <div class="text childCenter">
+    <div class="text" style="margin:0;font-size: 2vh">
+      You don't have Timed Tasks in this home.
+    </div>
+    <div class="text " style="margin:0;font-size: 2vh">
+      Add one right now.
+    </div>
+  </div>
+</div>
+
+<div *ngIf="timed_tasks.length > 0">
+
+
+  <div *ngIf="typeIndex =='things'">
+
+    <ng-container *ngFor="let timed_task of timed_tasks">
+      <div *ngIf="timed_task.thing" class="underSlidesMinor">
+        <ion-row class="full2 "
+                 [ngClass]="{ 'module': theme == 'default',  'moduleRedTheme': theme=='red' , 'moduleGreenTheme': theme=='green' }"
+                 (click)="editTimedTask(timed_task)">
+          <ion-row class="full2" style="height:60%;margin-top:1vh">
+            <ion-col col-3 class="centertitle roomicon" >
+              <div class="centertitle" *ngIf="timed_task.thing.type === 'Things::Light'">
+                <img src="./assets/Light_color.png" class="iconTimedTasks" [ngClass]="{ 'iconTasksListDefaultTheme': theme == 'default', 'iconTasksListRedTheme': theme=='red' , 'iconTasksListGreenTheme': theme=='green' }">
+              </div>
+              <div class="centertitle" *ngIf="timed_task.thing.type === 'Things::Lock'">
+                <img src="./assets/Lock.ico" class="iconTimedTasks" [ngClass]="{ 'iconTasksListDefaultTheme': theme == 'default', 'iconTasksListRedTheme': theme=='red' , 'iconTasksListGreenTheme': theme=='green' }">
+              </div>
+              <div *ngIf="timed_task.thing.type === 'Things::Thermostat'">
+                <img src="./assets/thermostat_icon.png" class="iconTimedTasks" [ngClass]="{ 'iconTasksListDefaultTheme': theme == 'default', 'iconTasksListRedTheme': theme=='red' , 'iconTasksListGreenTheme': theme=='green' }">
+              </div>
+              <div *ngIf="timed_task.thing.type === 'Things::MotionSensor'">
+                <img src="./assets/motion_sensor.png" class="iconTimedTasks" [ngClass]="{ 'iconTasksListDefaultTheme': theme == 'default', 'iconTasksListRedTheme': theme=='red' , 'iconTasksListGreenTheme': theme=='green' }">
+
+              </div>
+              <div *ngIf="timed_task.thing.type === 'Things::Weather'">
+                <img src="./assets/weather-icon-png-11063.png" class="iconTimedTasks" [ngClass]="{ 'iconTasksListDefaultTheme': theme == 'default', 'iconTasksListRedTheme': theme=='red' , 'iconTasksListGreenTheme': theme=='green' }">
+              </div>
+            </ion-col>
+
+            <ion-col col-9 class="centertitle" style="padding: 3vw;">
+              <ion-row class="full">
+                <h1>{{timed_task.thing.name}}</h1>
+              </ion-row>
+              <ion-row class="full">
+                <h1 class="minor">{{timed_task.room.name}}</h1>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="full2" style="height:30%;margin-top:1vh;margin-bottom:1vh">
+            <ion-row class="full2">
+              <p style="margin: auto" class="tasks">{{timed_task.statusText}}</p>
+            </ion-row>
+
+          </ion-row>
+
+          <ion-row style="height:10%;width: 90%;margin-bottom: 1vh">
+            <div class="nextrun right">{{timed_task.display}}</div>
+          </ion-row>
+        </ion-row>
+      </div>
+    </ng-container>
+
+  </div>
+
+
+  <div *ngIf="typeIndex =='scenarios'">
+    <ng-container *ngFor="let timed_task of timed_tasks">
+      <div *ngIf="timed_task.scenario" class="underSlidesMinor">
+        <ion-row class="full2 "
+                 [ngClass]="{ 'module': theme == 'default',  'moduleRedTheme': theme=='red' , 'moduleGreenTheme': theme=='green' }"
+                 (click)="editTimedTask(timed_task)">
+          <ion-row class="full2" style="height:60%;margin-top: 1vh">
+            <ion-col col-3 class="roomicon">
+              <div style="height: 100%" *ngIf="timed_task.scenario.icon === '1'">
+                <img src="./assets/Cinema-PNG.png" class="iconTimedTasks" [ngClass]="{ 'iconTasksListDefaultTheme': theme == 'default', 'iconTasksListRedTheme': theme=='red' , 'iconTasksListGreenTheme': theme=='green' }">
+              </div>
+              <div style="height: 100%" *ngIf="timed_task.scenario.icon === '2'">
+                <img src="./assets/Light_color.png" class="iconTimedTasks" [ngClass]="{ 'iconTasksListDefaultTheme': theme == 'default', 'iconTasksListRedTheme': theme=='red' , 'iconTasksListGreenTheme': theme=='green' }">
+              </div>
+              <div style="height: 100%" *ngIf="timed_task.scenario.icon === '3'" [ngClass]="{ 'iconTasksListDefaultTheme': theme == 'default', 'iconTasksListRedTheme': theme=='red' , 'iconTasksListGreenTheme': theme=='green' }">
+                <img src="./assets/Lock.ico" class="iconTimedTasks">
+              </div>
+            </ion-col>
+
+            <ion-col col-9 class="centertitle" style="padding: 3vw;">
+              <ion-row class="full">
+                <h1>{{timed_task.scenario.name}}</h1>
+              </ion-row>
+              <ion-row class="full">
+                <h1 class="minor">{{timed_task.count}} {{devicesTasksLabel}}</h1>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="full2" style="height:30%">
+
+            <ng-container *ngFor="let thingstatus of timed_task.ThingsStatus; let index = index">
+              <ion-row class="full2" style="margin-top:1vh;margin-bottom:1vh">
+                <p style="margin: auto" class="tasks">{{thingstatus.statusText}}</p>
+              </ion-row>
+            </ng-container>
+
+
+          </ion-row>
+
+          <ion-row class="full2" style="height:10%;width: 90%;margin-bottom: 1vh">
+            <div class="nextrun right">{{timed_task.display}}</div>
+          </ion-row>
+        </ion-row>
+      </div>
+    </ng-container>
+
+  </div>
+</div>

@@ -1,0 +1,32 @@
+notifications-page {
+
+  .theme{
+    max-height: 100%;
+    max-width: 100%;
+    width: 8vw;
+    height: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    border: solid black;
+    border-radius: 10px;
+    border-width: 1px;
+    display: inline-block;
+  }
+
+  .activeBorder{
+    border-width: 3px;
+  }
+
+  .text{
+    text-align: center;
+    line-height: 1em;
+    font-weight: 100;
+    letter-spacing: 0.02rem;
+    color: white;
+    font-size: 1.9vh;
+  }
+
+}

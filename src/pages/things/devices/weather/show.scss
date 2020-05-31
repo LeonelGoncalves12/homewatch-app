@@ -1,0 +1,26 @@
+.item-input-disabled{
+  .checkbox{
+    opacity: 1 !important;
+  }
+  .label{
+    color: black !important;
+  }
+  .text-input[disabled]{
+    opacity: 1 !important;
+  }
+}
+
+.item-checkbox-disabled{
+  .checkbox{
+    opacity: 1 !important;
+  }
+  .label{
+    color: black !important;
+    opacity: 1 !important;
+  }
+  .text-input[disabled]{
+    opacity: 1 !important;
+  }
+
+
+}

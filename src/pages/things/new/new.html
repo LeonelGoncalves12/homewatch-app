@@ -1,0 +1,102 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{addDeviceLabel}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content
+  [ngClass]="{ 'homepage': theme == 'default', 'homepageRedTheme': theme=='red' , 'homepageGreenTheme': theme=='green' }">
+  <div class='content'>
+    <div class='input-fields'>
+      <form [formGroup]="thingForm" (ngSubmit)="onSubmit(thingForm)">
+
+        <h1 style="margin-top: 2vh">{{typeLabel}}</h1>
+        <div class="div-slides " style="margin-top: 1vh;">
+          <ion-slides slidesPerView="3" spaceBetween="1" class="lineborders"
+                      [ngClass]="{ 'slides': theme == 'default',  'slidesRedTheme': theme=='red' , 'slidesGreenTheme': theme=='green' }">
+            <ion-slide *ngFor="let option of typeOptions" (click)="chooseType(option)">
+              <ion-row class="roomicon ">
+                <div class="centertitle">
+                  <div *ngIf="option.icon == '1'">
+                    <img src="./assets/Light_color.png"
+                         [ngClass]="[ selectedType == option.text ? theme == 'default' ? 'active_slideColumn' : theme == 'red' ? 'active_slideColumnRedTheme' :   theme == 'green' ? 'active_slideColumnGreenTheme' : '' : selectedType != option.text ? theme == 'default' ? 'slideColumn' : theme == 'red' ? 'slideColumnRedTheme' :   theme == 'green' ? 'slideColumnGreenTheme' : '' :'']">
+                  </div>
+                  <div *ngIf="option.icon == '2'">
+                    <img src="./assets/Lock.ico"
+                         [ngClass]="[ selectedType == option.text ? theme == 'default' ? 'active_slideColumn' : theme == 'red' ? 'active_slideColumnRedTheme' :   theme == 'green' ? 'active_slideColumnGreenTheme' : '' : selectedType != option.text ? theme == 'default' ? 'slideColumn' : theme == 'red' ? 'slideColumnRedTheme' :   theme == 'green' ? 'slideColumnGreenTheme' : '' :'']">
+                  </div>
+                  <div *ngIf="option.icon == '3'">
+                    <img src="./assets/thermostat_icon.png"
+                         [ngClass]="[ selectedType == option.text ? theme == 'default' ? 'active_slideColumn' : theme == 'red' ? 'active_slideColumnRedTheme' :   theme == 'green' ? 'active_slideColumnGreenTheme' : '' : selectedType != option.text ? theme == 'default' ? 'slideColumn' : theme == 'red' ? 'slideColumnRedTheme' :   theme == 'green' ? 'slideColumnGreenTheme' : '' :'']">
+                  </div>
+                  <div *ngIf="option.icon == '5'">
+                    <img src="./assets/motion_sensor.png"
+                         [ngClass]="[ selectedType == option.text ? theme == 'default' ? 'active_slideColumn' : theme == 'red' ? 'active_slideColumnRedTheme' :   theme == 'green' ? 'active_slideColumnGreenTheme' : '' : selectedType != option.text ? theme == 'default' ? 'slideColumn' : theme == 'red' ? 'slideColumnRedTheme' :   theme == 'green' ? 'slideColumnGreenTheme' : '' :'']">
+                  </div>
+                  <div *ngIf="option.icon == '4'">
+                    <img src="./assets/weather-icon-png-11063.png"
+                         [ngClass]="[ selectedType == option.text ? theme == 'default' ? 'active_slideColumn' : theme == 'red' ? 'active_slideColumnRedTheme' :   theme == 'green' ? 'active_slideColumnGreenTheme' : '' : selectedType != option.text ? theme == 'default' ? 'slideColumn' : theme == 'red' ? 'slideColumnRedTheme' :   theme == 'green' ? 'slideColumnGreenTheme' : '' :'']">
+                  </div>
+                </div>
+              </ion-row>
+              <ion-row class="centertitle text oversize">
+                <div class="centertitle">
+                  {{option.text}}
+                </div>
+              </ion-row>
+            </ion-slide>
+          </ion-slides>
+        </div>
+
+        <div style="margin-top: 2vh">
+          <div [hidden]="!thingForm.value.type">
+            <h1>subtype</h1>
+            <div style="display: flex;align-items: center;  justify-content: center;">
+              <ng-container *ngFor="let option of subTypeOptions">
+                <button style="float: none; margin-right: 2px; margin-top: 1vh" type="button" class='seeall'
+                        (click)="chooseSubType(option)"
+                        [ngClass]="[  selectedSubType == option ? theme == 'default' ? 'slideActive' : theme == 'red' ? 'slideActiveRedTheme' :   theme == 'green' ? 'slideActiveGreenTheme' : '' :  selectedSubType != option ? theme == 'default' ? 'slideInactive' : theme == 'red' ? 'slideInactiveRedTheme' :   theme == 'green' ? 'slideInactiveGreenTheme' : '' :'']">
+                  {{option}}
+                </button>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+
+
+        <div style="margin-top: 1vh" formGroupName="connection_info">
+          <ion-input type='text' placeholder={{addressLabel}} class='input-line full-width'
+                     formControlName="address"></ion-input>
+          <ion-input type='text' placeholder={{portLabel}} class='input-line full-width'
+                     formControlName="port"></ion-input>
+
+        </div>
+        <ion-input type='text' placeholder="extra info" class='input-line full-width'
+                   formControlName="extra_info"></ion-input>
+
+        <button *ngIf="!searching" type="button" class='ghost-round full-width' (click)="discoverDevices()">
+          {{findDevicesLabel}}
+        </button>
+        <div *ngIf="searching" style="display: flex; justify-content: center;">
+          <img src="./assets/loadingGif.svg">
+        </div>
+
+        <div *ngIf="renderName">
+          <ion-input type='text' placeholder={{nameLabel}} class='input-line full-width'
+                     formControlName="name"></ion-input>
+
+
+          <button class='ghost-round full-width' [disabled]="!thingForm.valid">{{saveLabel}}</button>
+
+        </div>
+      </form>
+    </div>
+
+  </div>
+</ion-content>
+
+
+

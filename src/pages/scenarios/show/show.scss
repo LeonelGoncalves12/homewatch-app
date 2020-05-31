@@ -1,0 +1,19 @@
+show-scenario-page{
+  .scenario-things-list{
+    margin-bottom: $fab-size;
+  }
+
+  h1 {
+    color: rgb(251, 255, 244);
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    font-size: 16px;
+    margin: 0 0 0px;
+    text-align: left;
+    text-transform: uppercase;
+    width: 100%;
+  }
+
+  .minor{
+    font-size: 10px;
+  }
+}

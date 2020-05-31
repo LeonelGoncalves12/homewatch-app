@@ -1,0 +1,97 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      <div>{{notificationsLabel}}</div>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content  [ngClass]="{ 'homepage': theme == 'default', 'homepageRedTheme': theme=='red' , 'homepageGreenTheme': theme=='green' }">
+  <div style="height: 100%" class='content'>
+
+    <div style="height: 100%" class='input-fields'>
+      <div [hidden]="!loading" class="loadingContainter">
+        <img class="loadingElement" src="./assets/loadingGif.svg">
+      </div>
+      <div [hidden]="loading">
+        <div [hidden]="!failed" class="containerCenter">
+          <div class="text childCenter">
+            <div class="text" style="margin:0;font-size: 2vh">
+              {{somethingFailedLabel}}
+            </div>
+            <div class="text " style="margin-top: 2vh">
+              <button class='seeall' [ngClass]="{ 'seeallDefaultTheme': theme == 'default', 'seeallRedTheme': theme=='red' , 'seeallGreenTheme': theme=='green' }" (click)="tryAgain()" style="float: none">Try Again</button>
+            </div>
+          </div>
+        </div>
+        <div [hidden]="failed" style="margin-top: 10vh">
+          <ion-row  class="full2 " style="margin-top: 1vh" [ngClass]="{ 'module': theme == 'default',  'moduleRedTheme': theme=='red' , 'moduleGreenTheme': theme=='green' }" >
+            <ion-col col-3 class="roomicon">
+              <div >
+                <img src="./assets/clock.png" class="iconNotifications" [ngClass]="{ 'iconNotificationsDefaultTheme': theme == 'default',  'iconNotificationsRedTheme': theme=='red' , 'iconNotificationsGreenTheme': theme=='green' }">
+              </div>
+            </ion-col>
+            <ion-col col-5 class="centertitle text" style="text-align: left">
+             {{timedTasksLabel}}
+            </ion-col>
+            <ion-col col-4 class="centertitle">
+              <div  *ngIf="timedInitialValue==0">
+                <div class="switch center">
+                  <input type="checkbox" name="switch" class="switch-checkbox-inverse" id="myswitch1" checked>
+                  <label class="switch-label-inverse" for="myswitch1" (click)="switchTimed()">
+                    <span *ngIf="timedInitialValue==0" class="switchinverse-inner"></span>
+                    <span class="switch-switch-inverse"></span>
+                  </label>
+                </div>
+              </div>
+
+              <div  *ngIf="timedInitialValue==1">
+                <div class="switch center">
+                  <input type="checkbox" name="switch" class="switch-checkbox" id="myswitch2" checked>
+                  <label class="switch-label" for="myswitch2" (click)="switchTimed()">
+                    <span *ngIf="timedInitialValue==1" class="switch-inner"></span>
+                    <span class="switch-switch"></span>
+                  </label>
+                </div>
+              </div>
+
+            </ion-col>
+          </ion-row>
+
+
+          <ion-row  class="full2 " style="margin-top: 3vh" [ngClass]="{ 'module': theme == 'default',  'moduleRedTheme': theme=='red' , 'moduleGreenTheme': theme=='green' }">
+            <ion-col col-3 class="roomicon">
+              <div >
+                <img src="./assets/trigger.png" class="iconNotifications"  [ngClass]="{ 'iconNotificationsDefaultTheme': theme == 'default',  'iconNotificationsRedTheme': theme=='red' , 'iconNotificationsGreenTheme': theme=='green' }">
+              </div>
+            </ion-col>
+            <ion-col col-5 class="centertitle text" style="text-align: left">
+              {{triggeredTasksLabel}}
+            </ion-col>
+            <ion-col col-4 class="centertitle">
+              <div  *ngIf="triggeredInitialValue==0">
+                <div class="switch center">
+                  <input type="checkbox" name="switch" class="switch-checkbox-inverse" id="myswitch3" checked>
+                  <label class="switch-label-inverse" for="myswitch3" (click)="switchTriggered()">
+                    <span  class="switchinverse-inner"></span>
+                    <span class="switch-switch-inverse"></span>
+                  </label>
+                </div>
+              </div>
+
+              <div  *ngIf="triggeredInitialValue==1">
+                <div class="switch center">
+                  <input type="checkbox" name="switch" class="switch-checkbox" id="myswitch4" checked>
+                  <label class="switch-label" for="myswitch4" (click)="switchTriggered()">
+                    <span  class="switch-inner"></span>
+                    <span class="switch-switch"></span>
+                  </label>
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

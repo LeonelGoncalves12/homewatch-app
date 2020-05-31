@@ -1,0 +1,15 @@
+<!--
+<ion-item class="nobackground">
+  <ion-label>Locked</ion-label>
+  <ion-toggle [(ngModel)]="status.locked" (ngModelChange)="onStatusChange($event)"></ion-toggle>
+</ion-item>
+--->
+
+<div class="onoffswitch center"  id="thing_status" >
+  <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch{{type}}" checked>
+  <label class="onoffswitch-label" for="myonoffswitch{{type}}"  (click)="switch_lock_unlock()">
+    <span *ngIf="inverse==true" class="lockswitchinverse-inner"></span>
+    <span *ngIf="inverse==false" class="lockswitch-inner"></span>
+    <span class="onoffswitch-switch"></span>
+  </label>
+</div>

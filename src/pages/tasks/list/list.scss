@@ -1,0 +1,198 @@
+list-tasks-page{
+  .task-list{
+    margin-bottom: $fab-size;
+  }
+
+  .newtoolbar{
+    margin-bottom: 0;
+  }
+
+  h1 {
+     color: rgb(251, 255, 244);
+     font-family: "Trebuchet MS", Helvetica, sans-serif;
+     font-size: 2vh;
+     margin: 0 0 0px;
+     text-align: left;
+     text-transform: uppercase;
+     width: 100%;
+  }
+
+  .nextrun{
+    font-size: 1.4vh;
+    color: #000000;
+    font-weight: bold;
+  }
+
+  .tasktitle{
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    font-size: 2.1vh;
+    margin-bottom: 3px;
+  }
+
+  .minor{
+    font-size: 1.1vh;
+  }
+
+  .right{
+    margin-left: auto;
+  }
+
+  .tasks{
+    font-size: 1.2vh;
+  }
+
+  .scenarioThing{
+    max-height: 25px;
+    border: solid black;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    border: solid black;
+    border-radius: 20px;
+    border-width: 1px;
+    display: block;
+    padding: 3px;
+    background: linear-gradient(#25444b, #313f56bd);
+  }
+
+  .slide-zoom{
+    height: 93%;
+    margin-right:10px;
+    margin-left:10px;
+  }
+
+  .borderTimedTasks{
+    padding-top: 0px;
+    padding-bottom:0px;
+    height: 7vh;
+  }
+
+  .borderMinutes{
+    border: solid black;
+    border-radius: 13px;
+    padding: 15px;
+    border-width: 1px;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  .title{
+    font-size:12px
+  }
+  .selectIcon{
+    padding: 1vh;
+    text-align: center;
+  }
+  .item-cover{
+  position: relative;
+  width: 0;
+  padding-right: 0
+  }
+
+  .active_time{
+    background-image: linear-gradient(141deg, #3f729b 0%, #47c7d6 51%, #2cb5e8 75%);
+    border: solid black;
+    border-radius: 13px;
+    border-width: 1px;
+  }
+
+  .active_timeRedTheme{
+    background-image: linear-gradient(141deg, #461817 0%, #d63a30 51%, #9c2427 75%);
+    border: solid black;
+    border-radius: 13px;
+    border-width: 1px;
+  }
+
+  .active_timeGreenTheme{
+    background: linear-gradient(141deg, #0c4627 0%, #0b580a 51%, #144a1a 75%);
+    border: solid black;
+    border-radius: 13px;
+    border-width: 1px;
+  }
+
+  .item{
+    padding:0px
+  }
+  ion-list{
+    width: 100%
+  }
+  ion-toolbar{
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .field_set{
+    border-color: #000000;
+    border-radius: 5px;
+    border-width: 1px;
+  }
+
+  .active_thingRedTheme{
+    background: linear-gradient(#a73c3c, rgba(210, 54, 45, 0.89));
+    border: solid black;
+    border-radius: 13px;
+    border-width: 1px;
+    padding-left: 15px;
+    width: 100%;;
+    margin-bottom: 10px;
+  }
+
+  .active_thingGreenTheme{
+    background: linear-gradient(#245a0d, rgba(5, 16, 5, 0.89));
+    border: solid black;
+    border-radius: 13px;
+    border-width: 1px;
+    padding-left: 15px;
+    width: 100%;;
+    margin-bottom: 10px;
+  }
+  .slideColumn {
+    height: 10vh !important;
+    width: 10vh !important;
+  }
+  .slideColumnRedTheme {
+    height: 10vh !important;
+    width: 10vh !important;
+  }
+  .slideColumnGreenTheme {
+    height: 10vh !important;
+    width: 10vh !important;
+  }
+
+  .active_slideColumn{
+    height: 10vh !important;
+    width: 10vh !important;
+
+  }
+  .active_slideColumnRedTheme{
+    height: 10vh !important;
+    width: 10vh !important;
+
+  }
+  .active_slideColumnGreenTheme{
+    height: 10vh !important;
+    width: 10vh !important;
+  }
+  .toolbarTasks{
+    background: none;
+  }
+  .iconTimedTasks{
+    display:block;
+    margin: auto;
+    width: 15vw;
+    border: solid black;
+    border-radius: 10px;
+    border-width: 1px;
+  }
+
+  .iconTasksListDefaultTheme{
+    background: linear-gradient(141deg, #3f729b 0%, #47c7d6 51%, #2cb5e8 75%)
+  }
+  .iconTasksListRedTheme{
+    background: linear-gradient(141deg, #da4f4f 0%, #ec6239 51%, #e67e60 75%);
+  }
+  .iconTasksListGreenTheme{
+    background: linear-gradient(141deg, #3f9b53 0%, #47d652 51%, #2ce887 75%)
+  }
+}

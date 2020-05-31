@@ -1,0 +1,175 @@
+room-page {
+  .room {
+    height: 100%;
+    width: 100%;
+    border-radius: 13px;
+    padding: 3px;
+    background: linear-gradient(#deee00, #ffbb00);
+  }
+
+  h1 {
+    color: rgb(251, 255, 244);
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    font-size: 2vh;
+    margin: 0 0 0.7vh;
+    text-align: left;
+    text-transform: uppercase;
+    width: 100%;
+  }
+
+  .edit {
+    height: 15px;
+    width: 15px;
+    text-align: right;
+  }
+
+  .WidthAndAlign {
+    width: 100%;
+    text-align: center;
+  }
+
+  .titulo {
+    text-align: center;
+  }
+
+  .slideColumnHomes{
+    height: 6vh;
+    width: 6vh;
+    border: solid black;
+    border-radius: 13px;
+    border-width: 1px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1px;
+    margin-bottom: 1px;
+    display: block;
+    padding: 3px;
+    background-image:linear-gradient(141deg, #b7ae96 0%, #d4d6ba 51%, #d8d4af 75%);
+  }
+
+  .slideColumnON{
+    background-image: linear-gradient(141deg, #199b02 0%, #59d66b 51%, #92e830 75%) !important;
+  }
+
+  .slideColumnOFF{
+    background-image: linear-gradient(141deg, #9b1610 0%, #d64e20 51%, #e84243 75%) !important;
+  }
+
+  .slideColumnNULL{
+    background-image: linear-gradient(141deg, #535352 0%, #7a787b 51%, #545356 75%) !important;;
+  }
+
+
+  .slideColumn {
+    height: 8vh !important;
+    width: 8vh !important;
+    border: solid black;
+    border-radius: 13px;
+    border-width: 1px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1px;
+    margin-bottom: 1px;
+    display: block;
+    padding: 3px;
+    background-image: linear-gradient(141deg, #3f729b 0%, #47c7d6 51%, #2cb5e8 75%);
+  }
+  .slideColumnRedTheme {
+    height: 8vh !important;
+    width: 8vh !important;
+    border: solid black;
+    border-radius: 13px;
+    border-width: 1px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1px;
+    margin-bottom: 1px;
+    display: block;
+    padding: 3px;
+    background-image: linear-gradient(141deg, #da4f4f 0%, #ec6239 51%, #e67e60 75%)
+  }
+  .slideColumnGreenTheme {
+    height: 8vh !important;
+    width: 8vh !important;
+    border: solid black;
+    border-radius: 13px;
+    border-width: 1px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1px;
+    margin-bottom: 1px;
+    display: block;
+    padding: 3px;
+    background-image: linear-gradient(141deg, #3f9b53 0%, #47d652 51%, #2ce887 75%);
+  }
+
+  .active_slideColumn{
+    height: 8vh !important;
+    width: 8vh !important;
+    border: solid black;
+    border-radius: 13px;
+    border-width: 1px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1px;
+    margin-bottom: 1px;
+    display: block;
+    padding: 3px;
+    background-image: linear-gradient(141deg, #0c73c7 0%, #0f6fb3 51%, #1b7292 75%);
+  }
+  .active_slideColumnRedTheme{
+    height: 8vh !important;
+    width: 8vh !important;
+    border: solid black;
+    border-radius: 13px;
+    border-width: 1px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1px;
+    margin-bottom: 1px;
+    display: block;
+    padding: 3px;
+    background-image: linear-gradient(141deg, #c71d0c 0%, #b31e0f 51%, #bd382c 75%)
+  }
+  .active_slideColumnGreenTheme{
+    height: 8vh !important;
+    width: 8vh !important;
+    border: solid black;
+    border-radius: 13px;
+    border-width: 1px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1px;
+    margin-bottom: 1px;
+    display: block;
+    padding: 3px;
+    background-image: linear-gradient(141deg, #1a6d06 0%, #3a8c10 51%, #34921b 75%)
+  }
+  .slideColumn {
+    height: 10vh !important;
+    width: 10vh !important;
+  }
+  .slideColumnRedTheme {
+    height: 10vh !important;
+    width: 10vh !important;
+  }
+  .slideColumnGreenTheme {
+    height: 10vh !important;
+    width: 10vh !important;
+  }
+
+  .active_slideColumn{
+    height: 10vh !important;
+    width: 10vh !important;
+
+  }
+  .active_slideColumnRedTheme{
+    height: 10vh !important;
+    width: 10vh !important;
+
+  }
+  .active_slideColumnGreenTheme{
+    height: 10vh !important;
+    width: 10vh !important;
+  }
+}

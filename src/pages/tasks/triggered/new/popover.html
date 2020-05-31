@@ -1,0 +1,13 @@
+<ion-content class='homepage'>
+  <div class='content space'>
+  </div>
+
+  <ion-row class="full " *ngFor="let option of options"  (click)="choose_option(option)" style="text-align: center" [ngClass]="{ 'active_option': index === option.id, 'option': index != option.id}">
+    <label>{{option.title}}</label>
+  </ion-row>
+
+  <button class='seeall full-width' (click)="submit()">Choose Sensor</button>
+
+  <div style="margin-bottom: 15px"></div>
+</ion-content>
+

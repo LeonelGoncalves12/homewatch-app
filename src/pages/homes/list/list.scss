@@ -1,0 +1,240 @@
+list-pagee {
+
+  .addHome {
+    margin-top: 20%;
+    margin-left: 20%;
+    margin-right: 20%;
+  }
+  .icon {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+
+  }
+  .button {
+    margin: 0 auto;
+    display: inline-block;
+    border-radius: 10px;
+    border: 0.5px solid black;
+    padding: 10px 20px;
+    color: aliceblue;
+    background-color:  #488aff;
+  }
+
+  .icons{
+    height: 30px;
+  }
+
+  .edit{
+    height: 15px;
+    width: 15px;
+  }
+
+  .addedit{
+    height: 17px;
+    margin-left: 5px;
+  }
+
+  .coltittle{
+    text-align: left;
+  }
+
+  .colbuttons{
+    text-align: right;
+  }
+
+  .titlesAux {
+    cursor: pointer;
+    background: linear-gradient(#3596b1, #325bb0);
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 25px;
+    color: rgb(0, 0, 0);
+    -webkit-align-self: flex-end;
+    -ms-flex-item-align: end;
+    align-self: flex-end;
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 2.5em;
+    margin: 0;
+    -webkit-transition: all .2s ease;
+    transition: all .2s ease;
+    height: auto;
+  }
+
+  .titlesAux:hover {
+    background: linear-gradient(#93ccff, #47668d);
+    color: #fff;
+    -webkit-transition: all .2s ease;
+    transition: all .2s ease;
+  }
+
+  .section{
+    margin-top: 10px;
+  }
+
+  .title{
+    font-size: 13px;
+  }
+
+  .bio{
+    font-weight: bold;
+    font-size: 13px;
+  }
+
+  .slideColumn {
+    height: 8vh !important;
+    width: 8vh !important;
+    border: solid black;
+    border-radius: 13px;
+    border-width: 1px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1px;
+    margin-bottom: 1px;
+    display: block;
+    padding: 3px;
+    background-image: linear-gradient(141deg, #3f729b 0%, #47c7d6 51%, #2cb5e8 75%);
+  }
+  .slideColumnRedTheme {
+    height: 8vh !important;
+    width: 8vh !important;
+    border: solid black;
+    border-radius: 13px;
+    border-width: 1px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1px;
+    margin-bottom: 1px;
+    display: block;
+    padding: 3px;
+    background-image: linear-gradient(141deg, #da4f4f 0%, #ec6239 51%, #e67e60 75%)
+  }
+  .slideColumnGreenTheme {
+    height: 8vh !important;
+    width: 8vh !important;
+    border: solid black;
+    border-radius: 13px;
+    border-width: 1px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1px;
+    margin-bottom: 1px;
+    display: block;
+    padding: 3px;
+    background-image: linear-gradient(141deg, #3f9b53 0%, #47d652 51%, #2ce887 75%);
+  }
+
+  .active_slideColumn{
+    height: 8vh !important;
+    width: 8vh !important;
+    border: solid black;
+    border-radius: 13px;
+    border-width: 1px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1px;
+    margin-bottom: 1px;
+    display: block;
+    padding: 3px;
+    background-image: linear-gradient(141deg, #0c73c7 0%, #0f6fb3 51%, #1b7292 75%);
+  }
+  .active_slideColumnRedTheme{
+    height: 8vh !important;
+    width: 8vh !important;
+    border: solid black;
+    border-radius: 13px;
+    border-width: 1px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1px;
+    margin-bottom: 1px;
+    display: block;
+    padding: 3px;
+    background-image: linear-gradient(141deg, #c71d0c 0%, #b31e0f 51%, #bd382c 75%)
+  }
+  .active_slideColumnGreenTheme{
+    height: 8vh !important;
+    width: 8vh !important;
+    border: solid black;
+    border-radius: 13px;
+    border-width: 1px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1px;
+    margin-bottom: 1px;
+    display: block;
+    padding: 3px;
+    background-image: linear-gradient(141deg, #1a6d06 0%, #3a8c10 51%, #34921b 75%)
+  }
+
+  .slideColumnON{
+    background-image: linear-gradient(141deg, #199b02 0%, #59d66b 51%, #92e830 75%) !important;
+  }
+
+  .slideColumnOFF{
+    background-image: linear-gradient(141deg, #9b1610 0%, #d64e20 51%, #e84243 75%) !important;
+  }
+
+  .slideColumnNULL{
+    background-image: 	linear-gradient(141deg, #535352 0%, #7a787b 51%, #545356 75%) !important;
+  }
+
+  .lineborders {
+    border-bottom: 1px solid #f4f4f457;
+    border-top: 1px solid #f4f4f457;
+  }
+
+  .slideColumnHomes{
+    height: 6vh;
+    width: 6vh;
+    border: solid black;
+    border-radius: 13px;
+    border-width: 1px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1px;
+    margin-bottom: 1px;
+    display: block;
+    padding: 3px;
+    background-image: linear-gradient(141deg, #b7ae96 0%, #d4d6ba 51%, #d8d4af 75%);
+  }
+
+  .slideColumnHomes2{
+    height: 6vh;
+    width: 16vh;
+    border: solid black;
+    border-radius: 13px;
+    border-width: 1px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1px;
+    margin-bottom: 1px;
+    display: block;
+    padding: 3px;
+    background-image: linear-gradient(141deg, #3f729b 0%, #47c7d6 51%, #2cb5e8 75%);
+  }
+
+  .slideColumnHomes3{
+    height: 6vh;
+    width: 17vh;
+    border: solid black;
+    border-radius: 13px;
+    border-width: 1px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1px;
+    margin-bottom: 1px;
+    display: block;
+    padding: 3px;
+    background-image: linear-gradient(141deg, #3f729b 0%, #47c7d6 51%, #2cb5e8 75%);
+  }
+  h1{
+    text-align: center !important;
+  }
+  .swiper-slide {
+    width: auto;
+  }
+  ion-slide {
+    width: 25%!important;
+  }
+}

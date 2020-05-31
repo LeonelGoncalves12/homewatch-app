@@ -1,0 +1,45 @@
+<!--
+<ion-item class="nobackground">
+  <ion-label>Movement</ion-label>
+  <ion-toggle [disabled]="readOnly" [(ngModel)]="status.movement"></ion-toggle>
+</ion-item>
+-->
+<div *ngIf="type=='thing'">
+  <div *ngIf="isON"  (click)="switchStatus()">
+    <div class="switch2 center2">
+      <label class="content2">
+        <span class="on">ON</span>
+        <span class="bolinhaon"> </span>
+      </label>
+    </div>
+  </div>
+  <div *ngIf="!isON">
+    <div class="switch2 center2">
+      <label class="content2">
+        <span class="off">OFF</span>
+        <span class="bolinhaoff"> </span>
+      </label>
+    </div>
+  </div>
+</div>
+<div *ngIf="type=='thingCompare'">
+  <div  *ngIf="inverse==true">
+    <div class="switch center">
+      <input type="checkbox" name="switch" class="switch-checkbox-inverse" id="myswitch3" checked>
+      <label class="switch-label-inverse" for="myswitch3" (click)="switchStatus()">
+        <span  class="switchinverse-inner"></span>
+        <span class="switch-switch-inverse"></span>
+      </label>
+    </div>
+  </div>
+
+  <div  *ngIf="inverse==false">
+    <div class="switch center">
+      <input type="checkbox" name="switch" class="switch-checkbox" id="myswitch4" checked>
+      <label class="switch-label" for="myswitch4" (click)="switchStatus()">
+        <span  class="switch-inner"></span>
+        <span class="switch-switch"></span>
+      </label>
+    </div>
+  </div>
+</div>

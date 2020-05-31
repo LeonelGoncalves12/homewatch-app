@@ -1,0 +1,15 @@
+<div class="onoffswitch center"  id="thing_status" >
+  <div class="onoffswitch-label" for="myonoffswitch">
+    <div style="height: 27px;width: 100px">
+      <ion-slides slidesPerView="4" spaceBetween="1" style="background: none" class="ion-slides-device">
+        <ion-slide *ngFor="let n of range(10, 36)" (click)="chooseIndex(n)"
+          [ngClass]="[  n == index ? theme == 'default' ? 'slideActive' : theme == 'red' ? 'slideActiveRedTheme' :   theme == 'green' ? 'slideActiveGreenTheme' : '' :  n != index ? theme == 'default' ? 'slideInactive' : theme == 'red' ? 'slideInactiveRedTheme' :   theme == 'green' ? 'slideInactiveGreenTheme' : '' :'']" >
+          <div style="font-size: 17px"> {{n}}</div>
+
+        </ion-slide>
+      </ion-slides>
+
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,138 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{tasksLabel}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content [ngClass]="{ 'homepage': theme == 'default', 'homepageRedTheme': theme=='red' , 'homepageGreenTheme': theme=='green' }">
+  <div class='content space'  style="height: 100%">
+    <div *ngIf="loading" class="loadingContainter">
+      <img class="loadingElement" src="./assets/loadingGif.svg">
+    </div>
+    <div *ngIf="!loading" style="height: 100%">
+    <div class="div-slides slides" style=" margin:auto; width: 60% ; background: none; height: 19vh !important;">
+      <ion-slides slidesPerView="2" spaceBetween="1" class="lineborders"
+                  style="padding-bottom: 2vh; border: 0; background: none">
+        <ion-slide style="margin-bottom: 3vh">
+          <div class="roomicon" (click)="onTypeChange('timed')">
+            <div style="height:8vh">
+              <img src="./assets/clock.png" style="width: 7vh !important;height: 7vh !important;"
+              [ngClass]="[ typeActive == 'timed' ? theme == 'default' ? 'active_slideColumn' : theme == 'red' ? 'active_slideColumnRedTheme' :   theme == 'green' ? 'active_slideColumnGreenTheme' : '' : typeActive != 'timed'? theme == 'default' ? 'slideColumn' : theme == 'red' ? 'slideColumnRedTheme' :   theme == 'green' ? 'slideColumnGreenTheme' : '' :'']" >
+            </div>
+          </div>
+          <p class="centertitle text">
+            {{timedLabel}}
+          </p>
+        </ion-slide>
+
+        <ion-slide>
+          <div class="roomicon" (click)="onTypeChange('triggered')">
+            <div style="height:8vh">
+              <img src="./assets/trigger.png" style="width: 7vh !important;height: 7vh !important;"
+              [ngClass]="[ typeActive == 'triggered' ? theme == 'default' ? 'active_slideColumn' : theme == 'red' ? 'active_slideColumnRedTheme' :   theme == 'green' ? 'active_slideColumnGreenTheme' : '' : typeActive != 'triggered' ? theme == 'default' ? 'slideColumn' : theme == 'red' ? 'slideColumnRedTheme' :   theme == 'green' ? 'slideColumnGreenTheme' : '' :'']" >
+
+            </div>
+
+          </div>
+          <p class="centertitle text">
+            {{triggeredLabel}}
+          </p>
+        </ion-slide>
+      </ion-slides>
+    </div>
+
+
+    <div *ngIf="typeActive === 'timed'" class="underSlides" >
+      <div *ngIf="timed_tasks.length == 0" class="containerCenter">
+        <div class="text childCenter">
+          <div class="text" style="margin:0;font-size: 2vh">
+            You don't have Timed Tasks in this home.
+          </div>
+        </div>
+      </div>
+      <div *ngIf="timed_tasks.length > 0">
+
+        <div >
+          <canvas baseChart width="300" height="150px"
+
+                  style="border-radius: 15px; padding-top: 12px;padding-right: 5px"
+                  [datasets]="lineChartDataTimed" [labels]="lineChartLabels" [options]="lineChartOptions"
+                  [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType"
+                  [ngClass]="{ 'graphDefaultTheme': theme == 'default',  'graphRedTheme': theme=='red' , 'graphGreenTheme': theme=='green' }"></canvas>
+
+        </div>
+        <div *ngFor="let timed_task of listTimedCount" class="underSlides ">
+          <ion-row class="full2 " [ngClass]="{ 'module': theme == 'default',  'moduleRedTheme': theme=='red' , 'moduleGreenTheme': theme=='green' }" style="padding-top: 1vh; padding-bottom: 1vh;">
+            <ion-col col-2 class="roomicon">
+              <div>
+                <img src="./assets/clock.png" class="iconTasks" (click)="chooseTask('timed', timed_task.id)">
+              </div>
+            </ion-col>
+            <ion-col style="margin: auto">
+              <div *ngIf="timed_task.type == 'Thing'" class="textThingsRoom">{{deviceLabel}}: {{timed_task.name}}</div>
+              <div *ngIf="timed_task.type == 'Scenario'" class="textThingsRoom">{{scenarioLabel}}: {{timed_task.name}}</div>
+
+              <ion-row style="margin-top:17px">
+                  <div class="textThings" style="margin-right:7px">{{timesRunnedLabel}}: </div>
+                  <div class="textThings">{{timed_task.count}}</div>
+              </ion-row>
+            </ion-col>
+
+          </ion-row>
+        </div>
+
+      </div>
+    </div>
+
+    <div *ngIf="typeActive === 'triggered'" class="underSlides" >
+      <div *ngIf="triggered_tasks.length == 0" class="containerCenter">
+        <div class="text childCenter">
+          <div class="text" style="margin:0;font-size: 2vh">
+            You don't have Triggered Tasks in this home.
+          </div>
+        </div>
+      </div>
+      <div *ngIf="triggered_tasks.length > 0">
+
+        <div >
+          <canvas baseChart width="300" height="150px"
+
+                  style=" padding-top: 12px;padding-right: 5px;border-radius: 15px;"
+                  [datasets]="lineChartDataTriggered" [labels]="lineChartLabels" [options]="lineChartOptions"
+                  [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType"
+                  [ngClass]="{ 'graphDefaultTheme': theme == 'default',  'graphRedTheme': theme=='red' , 'graphGreenTheme': theme=='green' }" (chartClick)="chartClicked($event)"></canvas>
+
+        </div>
+        <div *ngFor="let triggered_task of listTriggeredCount" class="underSlides">
+          <ion-row class="full2" [ngClass]="{ 'module': theme == 'default',  'moduleRedTheme': theme=='red' , 'moduleGreenTheme': theme=='green' }"  style="padding-top: 1vh; padding-bottom: 1vh;">
+            <ion-col col-2 class="roomicon">
+              <div>
+                <img src="./assets/trigger.png" class="iconTasks"
+
+                     (click)="chooseTask('triggered', triggered_task.id)">
+
+              </div>
+            </ion-col>
+            <ion-col style="margin: auto">
+              <div *ngIf="triggered_task.type == 'Thing'" class="textThingsRoom">{{deviceLabel}}: {{triggered_task.name}}</div>
+              <div *ngIf="triggered_task.type == 'Scenario'" class="textThingsRoom">{{scenarioLabel}}: {{triggered_task.name}}</div>
+              <div  class="textThingsRoom">{{triggerDeviceLabel}}: {{triggered_task.thingCompare}}</div>
+
+
+              <ion-row style="margin-top:17px">
+                  <div class="textThings" style="margin-right:7px">{{timesRunnedLabel}}: </div>
+                  <div class="textThings">{{triggered_task.count}}</div>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </div>
+
+      </div>
+    </div>
+    </div>
+  </div>
+
+
+</ion-content>

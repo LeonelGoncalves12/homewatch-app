@@ -1,0 +1,378 @@
+<ion-header>
+  <!--<ion-navbar>-->
+  <!--<button ion-button menuToggle>-->
+  <!--<ion-icon name="menu"></ion-icon>-->
+  <!--</button>-->
+  <!--<ion-title >Dashboard</ion-title>-->
+  <!--</ion-navbar>-->
+
+  <ion-toolbar>
+    <img  (click)="logout()" style="width: 2.5vh; float: right;margin-right: 4vw;" src="./assets/logout.png">
+    <ion-title>HOMEWATCH</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content
+  [ngClass]="{ 'homepage': theme == 'default', 'homepageRedTheme': theme=='red' , 'homepageGreenTheme': theme=='green' }">
+
+  <div class='content contenthomepage'>
+    <div *ngIf="loading">
+      <img class="loadingElement" src="./assets/loadingGif.svg">
+    </div>
+    <div *ngIf="!loading" style="height: 100%">
+      <div *ngIf="failed" class="containerCenter">
+        <div class="text childCenter">
+          <div class="text" style="margin:0;font-size: 2vh">
+            Something failed.
+          </div>
+          <div class="text " style="margin-top: 2vh">
+            <button class='seeall'
+                    [ngClass]="{ 'seeallDefaultTheme': theme == 'default', 'seeallRedTheme': theme=='red' , 'seeallGreenTheme': theme=='green' }"
+                    (click)="tryAgain()" style="float: none">Try Again
+            </button>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="!failed" style="height: 100%">
+        <ion-slides class="homepageBackground">
+          <ion-slide class="fullHeightWidth">
+            <ion-grid class="grid gridhomepage fullHeightWidth"
+                      [ngClass]="{ 'border': theme == 'default', 'borderRedTheme': theme=='red' , 'borderGreenTheme': theme=='green' }">
+              <ion-row style="margin-top: 2vh;" class="full">
+                <h1>{{homesLabel}}</h1>
+              </ion-row>
+              <ion-row *ngIf="home" class="listhomes">
+                <ion-row class="full2" style="height: 23vh">
+                  <ion-col col-8 offset-2>
+                    <div class=" full2"><img #uploadedIMG src="./assets/Home-icon (2).png" class="homeHomepage"
+                                             (click)="listHomes(user)"></div>
+
+                  </ion-col>
+                </ion-row>
+
+                <ion-row class="full" style="margin-top: 12%">
+                  <ion-row style="height: 50%;" class="full2">
+                    <ion-col col-6>
+                      <ion-row>
+                        <div class="iconsPosition">
+                          <img src="./assets/kitchen_color.png" class="iconsHome" (click)="goToRooms()">
+                        </div>
+                      </ion-row>
+                      <ion-row>
+                        <p class="titleIconsHome">{{roomsLabel}}</p>
+                      </ion-row>
+                    </ion-col>
+                    <ion-col col-6>
+                      <ion-row>
+                        <div class="iconsPosition">
+                          <img src="./assets/Light_color.png" class="iconsHome" (click)="goToRooms()">
+                        </div>
+                      </ion-row>
+                      <ion-row>
+                        <p class="titleIconsHome">{{devicesLabel}}</p>
+                      </ion-row>
+                    </ion-col>
+                  </ion-row>
+
+                  <ion-row style="height: 50%;" class="full2">
+                    <ion-col col-6>
+                      <ion-row>
+                        <div class="iconsPosition">
+                          <img src="./assets/Cinema-PNG.png" class="iconsHome" (click)="goToScenarios()">
+                        </div>
+                      </ion-row>
+                      <ion-row>
+                        <p class="titleIconsHome">{{scenariosLabel}}</p>
+                      </ion-row>
+                    </ion-col>
+                    <ion-col col-6>
+                      <ion-row>
+                        <div class="iconsPosition">
+                          <img src="./assets/tasks.ico" class="iconsHome" (click)="goToTasks()">
+                        </div>
+                      </ion-row>
+                      <ion-row>
+                        <p class="titleIconsHome">{{tasksLabel}}</p>
+                      </ion-row>
+                    </ion-col>
+                  </ion-row>
+
+
+                </ion-row>
+              </ion-row>
+
+              <div [hidden]="home" class="containerCenter">
+                <div class="text childCenter">
+                  <div class="text" style="margin:0;font-size: 2vh">
+                    You don't have Homes.
+                  </div>
+                  <div class="text " style="margin:0;font-size: 2vh">
+                    Add one right now.
+                  </div>
+                  <div class="text " style="margin-top: 2vh">
+                    <button class='seeall' (click)="newHome()" style="float: none"  [ngClass]="{ 'seeallDefaultTheme': theme == 'default', 'seeallRedTheme': theme=='red' , 'seeallGreenTheme': theme=='green' }">
+                      New Home</button>
+                  </div>
+                </div>
+              </div>
+
+
+            </ion-grid>
+          </ion-slide>
+
+
+          <ion-slide>
+            <ion-grid class="grid gridhomepage fullHeightWidth"
+                      [ngClass]="{ 'border': theme == 'default', 'borderRedTheme': theme=='red' , 'borderGreenTheme': theme=='green' }">
+              <div style="width:100%">
+
+                <ion-row style="margin-top: 2vh;" class="full">
+                  <h1>{{weatherLabel}}</h1>
+                </ion-row>
+                <ion-row class="listhomes" style="height:100%">
+                  <ion-row class="full2" style="height:90%">
+                    <ion-row class="full2">
+                      <ion-col col-8 offset-2>
+                        <div class=" full2"><img src="./assets/weather/{{icon}}.png" class="iconHomepage"></div>
+                        <div class='subtitle' style="margin-top:1vh;color: white; font-size: 2.3vh">{{description}}</div>
+
+                      </ion-col>
+                    </ion-row>
+
+                    <ion-row class="full" style="max-height:100%;margin-top: 2vh">
+                      <ion-row style="height: 33,333333%;" class="full2">
+                        <ion-col col-6>
+                          <ion-row>
+                            <div class="iconsPosition">
+                              <img src="./assets/temperature.png" class="iconsHome">
+                            </div>
+                          </ion-row>
+                          <ion-row>
+                            <p class="titleIconsHome">{{temperature}}ºC</p>
+                          </ion-row>
+                        </ion-col>
+                        <ion-col col-6>
+                          <ion-row>
+                            <div class="iconsPosition">
+                              <img src="./assets/locationpng.png" class="iconsHome">
+                            </div>
+                          </ion-row>
+                          <ion-row>
+                            <p class="titleIconsHome">{{city}}</p>
+                          </ion-row>
+                        </ion-col>
+                      </ion-row>
+
+
+                      <ion-row style="height: 33,333333%;" class="full2">
+                        <ion-col col-6>
+                          <ion-row>
+                            <div class="iconsPosition">
+                              <img src="./assets/Humidity-icon.png" class="iconsHome">
+                            </div>
+                          </ion-row>
+                          <ion-row>
+                            <p class="titleIconsHome">{{humidity}}mm</p>
+                          </ion-row>
+                        </ion-col>
+                        <ion-col col-6>
+                          <ion-row>
+                            <div class="iconsPosition">
+                              <img src="./assets/Wind_icon.png" class="iconsHome">
+                            </div>
+                          </ion-row>
+                          <ion-row>
+                            <p class="titleIconsHome">{{wind}}km/h</p>
+                          </ion-row>
+                        </ion-col>
+                      </ion-row>
+
+
+                      <ion-row style="height: 33,333333%;" class="full2">
+                        <ion-col col-6>
+                          <ion-row>
+                            <div class="iconsPosition">
+                              <img src="./assets/sunrise-512.png" class="iconsHome">
+                            </div>
+                          </ion-row>
+                          <ion-row>
+                            <p class="titleIconsHome">{{displaySunrise}}h</p>
+                          </ion-row>
+                        </ion-col>
+                        <ion-col col-6>
+                          <ion-row>
+                            <div class="iconsPosition">
+                              <img src="./assets/sunset-512.png" class="iconsHome">
+                            </div>
+                          </ion-row>
+                          <ion-row>
+                            <p class="titleIconsHome">{{displaySunset}}h</p>
+                          </ion-row>
+                        </ion-col>
+                      </ion-row>
+                    </ion-row>
+                  </ion-row>
+                </ion-row>
+
+              </div>
+            </ion-grid>
+          </ion-slide>
+
+          <ion-slide class="fullHeightWidth">
+            <ion-grid class="grid gridhomepage fullHeightWidth"
+                      [ngClass]="{ 'border': theme == 'default', 'borderRedTheme': theme=='red' , 'borderGreenTheme': theme=='green' }">
+              <div style="width:100%">
+                <ion-row style="margin-top: 2vh;" class="full">
+                  <h1>{{statisticsLabel}}</h1>
+                </ion-row>
+                <ion-row class="listhomes">
+                  <div class="full2" style="height:90%">
+                    <ion-row class="full2">
+                      <ion-col col-8 offset-2>
+                        <div class=" full2"><img src="./assets/statstest1.png" class="iconHomepage"></div>
+                      </ion-col>
+                    </ion-row>
+
+                    <div class="full" style="margin-top: 12%">
+                      <ion-row style="height: 50%;" class="full2">
+                        <ion-col col-6>
+                          <ion-row>
+                            <div class="iconsPosition">
+                              <img src="./assets/Light_color.png" class="iconsHome"
+                                   (click)="listStatisticsThings(user)">
+                            </div>
+                          </ion-row>
+                          <ion-row>
+                            <p class="titleIconsHome">{{devicesLabel}}</p>
+                          </ion-row>
+                        </ion-col>
+                        <ion-col col-6>
+                          <ion-row>
+                            <div class="iconsPosition">
+                              <img src="./assets/kitchen_color.png" class="iconsHome"
+                                   (click)="listStatisticsRoomsHomes(user)">
+                            </div>
+                          </ion-row>
+                          <ion-row>
+                            <p class="titleIconsHome">{{roomsLabel}} / {{homesLabel}}</p>
+                          </ion-row>
+                        </ion-col>
+                      </ion-row>
+
+                      <ion-row style="height: 50%;" class="full2">
+                        <ion-col col-6>
+                          <ion-row>
+                            <div class="iconsPosition">
+                              <img src="./assets/kitchen.png" class="iconsHome"
+                                   (click)="listStatisticsScenarios(user)">
+                            </div>
+                          </ion-row>
+                          <ion-row>
+                            <p class="titleIconsHome">{{scenariosLabel}}</p>
+                          </ion-row>
+                        </ion-col>
+                        <ion-col col-6>
+                          <ion-row>
+                            <div class="iconsPosition">
+                              <img src="./assets/tasks.ico" class="iconsHome"
+                                   (click)="listStatisticsTasks(user)">
+                            </div>
+                          </ion-row>
+                          <ion-row>
+                            <p class="titleIconsHome">{{tasksLabel}}</p>
+                          </ion-row>
+                        </ion-col>
+                      </ion-row>
+                    </div>
+                  </div>
+                </ion-row>
+
+              </div>
+            </ion-grid>
+          </ion-slide>
+
+          <ion-slide class="fullHeightWidth">
+            <ion-grid class="grid gridhomepage fullHeightWidth"
+                      [ngClass]="{ 'border': theme == 'default', 'borderRedTheme': theme=='red' , 'borderGreenTheme': theme=='green' }">
+              <div style="width:100%">
+                <ion-row style="margin-top: 2vh;" class="full">
+                  <h1>{{settingsLabel}}</h1>
+                </ion-row>
+                <ion-row class="listhomes">
+                  <div class="full2" style="height:90%">
+                    <ion-row class="full2">
+                      <ion-col col-8 offset-2>
+                        <div class=" full2"><img src="./assets/Setting-icon.png" class="iconHomepage"
+                                                 (click)="listHomes(user)"></div>
+                      </ion-col>
+                    </ion-row>
+                    <div class="full" style="margin-top: 12%">
+                      <ion-row style="height: 50%;" class="full2">
+                        <ion-col col-6>
+                          <ion-row>
+                            <div class="iconsPosition">
+                              <img src="./assets/profile.png" class="iconsHome" (click)="editUser(user)">
+                            </div>
+                          </ion-row>
+                          <ion-row>
+                            <p class="titleIconsHome">{{profileLabel}}</p>
+                          </ion-row>
+                        </ion-col>
+                        <ion-col col-6>
+                          <ion-row>
+                            <div class="iconsPosition">
+                              <img src="./assets/notificiation.png" class="iconsHome" (click)="goToNotifictions(user)">
+                            </div>
+                          </ion-row>
+                          <ion-row>
+                            <p class="titleIconsHome">{{notificationsLabel}}</p>
+                          </ion-row>
+                        </ion-col>
+                      </ion-row>
+
+                      <ion-row style="height: 50%;" class="full2">
+                        <ion-col col-6>
+                          <ion-row>
+                            <div class="iconsPosition">
+                              <img src="./assets/preferences-icon.png" (click)="goToPreferences(user)"
+                                   class="iconsHome">
+                            </div>
+                          </ion-row>
+                          <ion-row>
+                            <p class="titleIconsHome">{{preferencesLabel}}</p>
+                          </ion-row>
+                        </ion-col>
+                        <ion-col col-6>
+                          <ion-row>
+                            <div class="iconsPosition">
+                              <img src="./assets/Help_icon-72a7cf.svg.png" class="iconsHome">
+                            </div>
+                          </ion-row>
+                          <ion-row>
+                            <p class="titleIconsHome">{{helpLabel}}</p>
+                          </ion-row>
+                        </ion-col>
+                      </ion-row>
+                    </div>
+                  </div>
+                </ion-row>
+              </div>
+            </ion-grid>
+          </ion-slide>
+        </ion-slides>
+        <!---
+                <div style="position: absolute;top: 50%;left: 2vw;font-size: 25px;z-index: 2;" (click)="slidePrev()">
+                  <!--https://ionicframework.com/docs/api/slides ver esta shit e o metodo getActiveIndex()
+                  <img *ngIf="minIndexHome!=indexHome" src="./assets/arrowLeft.png" class="icons">
+                  <img *ngIf="minIndexHome==indexHome" src="./assets/arrowLeftDisable.png" class="icons">
+                </div>
+                <div style="position: absolute;top: 50%;right: 2vw;font-size: 25px;z-index: 2;" (click)="slideNext()">
+                    <img *ngIf="minIndexHome!=indexHome" src="./assets/arrowRight.png" class="icons">
+                    <img *ngIf="minIndexHome==indexHome" src="./assets/arrowRightDisable.png" class="icons">
+                </div>
+
+            --->
+      </div>
+    </div>
+  </div>
+</ion-content>

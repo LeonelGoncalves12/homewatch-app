@@ -1,0 +1,117 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      <div *ngIf="editMode; else new">{{editLabel}}</div>
+      <ng-template #new>{{newScenarioThingLabel}}</ng-template>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content
+  [ngClass]="{ 'homepage': theme == 'default', 'homepageRedTheme': theme=='red' , 'homepageGreenTheme': theme=='green' }">
+  <div style="height: 100%" class='content'>
+
+    <div style="height: 100%" class='input-fields'>
+      <div [hidden]="!loading" class="loadingContainter">
+        <img class="loadingElement" src="./assets/loadingGif.svg">
+      </div>
+      <div [hidden]="loading">
+        <div [hidden]="!failed" class="containerCenter">
+          <div class="text childCenter">
+            <div class="text" style="margin:0;font-size: 2vh">
+              {{somethingFailedLabel}}
+            </div>
+            <div class="text " style="margin-top: 2vh">
+              <button class='seeall'
+                      [ngClass]="{ 'seeallDefaultTheme': theme == 'default', 'seeallRedTheme': theme=='red' , 'seeallGreenTheme': theme=='green' }"
+                      (click)="tryAgain()" style="float: none">{{tryAgainLabel}}
+              </button>
+            </div>
+          </div>
+        </div>
+        <div [hidden]="failed">
+          <form style="height: 100%" [formGroup]="scenarioThingForm" (ngSubmit)="onSubmit(scenarioThingForm)">
+
+            <button *ngIf="editMode" style="float: right; right: 5%; margin-top: 1vh;margin-bottom: 1vh" class='seeall oversize'
+                    [ngClass]="{ 'seeallDefaultTheme': theme == 'default', 'seeallRedTheme': theme=='red' , 'seeallGreenTheme': theme=='green' }"
+                    (click)="removeScenarioThing()">{{removeDeviceLabel}}
+            </button>
+            <ion-row *ngIf="!editMode" class="selectrow" style="margin-top: 3vh">
+              <ion-slides slidesPerView="3" spaceBetween="1" class="lineborders"
+                          [ngClass]="{ 'slides': theme == 'default',  'slidesRedTheme': theme=='red' , 'slidesGreenTheme': theme=='green' }">
+                <ion-slide *ngFor="let thing of things">
+                  <ion-row class="roomicon">
+                    <div class="centertitle">
+                      <div *ngIf="thing.type === 'Things::Light'">
+                        <img src="./assets/Light_color.png" (click)="onThingChange(thing)"
+                             [ngClass]="[ thingCompareIndex == thing.id ? theme == 'default' ? 'active_slideColumn' : theme == 'red' ? 'active_slideColumnRedTheme' :   theme == 'green' ? 'active_slideColumnGreenTheme' : '' : thingCompareIndex != thing.id ? theme == 'default' ? 'slideColumn' : theme == 'red' ? 'slideColumnRedTheme' :   theme == 'green' ? 'slideColumnGreenTheme' : '' :'']">
+                      </div>
+                      <div *ngIf="thing.type === 'Things::Lock'">
+                        <img src="./assets/Lock.ico" (click)="onThingChange(thing)"
+                             [ngClass]="[ thingCompareIndex == thing.id ? theme == 'default' ? 'active_slideColumn' : theme == 'red' ? 'active_slideColumnRedTheme' :   theme == 'green' ? 'active_slideColumnGreenTheme' : '' : thingCompareIndex != thing.id ? theme == 'default' ? 'slideColumn' : theme == 'red' ? 'slideColumnRedTheme' :   theme == 'green' ? 'slideColumnGreenTheme' : '' :'']">
+                      </div>
+                      <div *ngIf="thing.type === 'Things::Thermostat'">
+                        <img src="./assets/thermostat_icon.png" (click)="onThingChange(thing)"
+                             [ngClass]="[ thingCompareIndex == thing.id ? theme == 'default' ? 'active_slideColumn' : theme == 'red' ? 'active_slideColumnRedTheme' :   theme == 'green' ? 'active_slideColumnGreenTheme' : '' : thingCompareIndex != thing.id ? theme == 'default' ? 'slideColumn' : theme == 'red' ? 'slideColumnRedTheme' :   theme == 'green' ? 'slideColumnGreenTheme' : '' :'']">
+                      </div>
+                      <div *ngIf="thing.type === 'Things::MotionSensor'">
+                        <img src="./assets/motion_sensor.png" (click)="onThingChange(thing)"
+                             [ngClass]="[ thingCompareIndex == thing.id ? theme == 'default' ? 'active_slideColumn' : theme == 'red' ? 'active_slideColumnRedTheme' :   theme == 'green' ? 'active_slideColumnGreenTheme' : '' : thingCompareIndex != thing.id ? theme == 'default' ? 'slideColumn' : theme == 'red' ? 'slideColumnRedTheme' :   theme == 'green' ? 'slideColumnGreenTheme' : '' :'']">
+                      </div>
+                      <div *ngIf="thing.type === 'Things::Weather'">
+                        <img src="./assets/weather-icon-png-11063.png" (click)="onThingChange(thing)"
+                             [ngClass]="[ thingCompareIndex == thing.id ? theme == 'default' ? 'active_slideColumn' : theme == 'red' ? 'active_slideColumnRedTheme' :   theme == 'green' ? 'active_slideColumnGreenTheme' : '' : thingCompareIndex != thing.id ? theme == 'default' ? 'slideColumn' : theme == 'red' ? 'slideColumnRedTheme' :   theme == 'green' ? 'slideColumnGreenTheme' : '' :'']">
+                      </div>
+                    </div>
+                  </ion-row>
+                  <ion-row class="centertitle text">
+                    <div class="centertitle">
+                      {{thing.name}}
+                    </div>
+                  </ion-row>
+                </ion-slide>
+              </ion-slides>
+            </ion-row>
+
+            <ion-row *ngIf="editMode" class="full">
+              <div class="centertitle">
+                <ion-row class="roomicon" margin-top="2vh">
+                  <div *ngIf="scenarioThing.thing.type === 'Things::Light'" style="margin: auto">
+                    <img src="./assets/Light_color.png" style="display:block;margin:auto;width: 10vh">
+                  </div>
+                  <div *ngIf="scenarioThing.thing.type === 'Things::Lock'" style="margin: auto">
+                    <img src="./assets/Lock.ico" style="display:block;margin:auto;width: 10vh">
+                  </div>
+                  <div *ngIf="scenarioThing.thing.type === 'Things::Thermostat'" style="margin: auto">
+                    <img src="./assets/thermostat_icon.png" style="display:block;margin:auto;width: 10vh">
+                  </div>
+                  <div *ngIf="scenarioThing.thing.type === 'Things::MotionSensor'" style="margin: auto">
+                    <img src="./assets/motion_sensor.png" style="display:block;margin:auto;width: 10vh">
+                  </div>
+                  <div *ngIf="scenarioThing.thing.type === 'Things::Weather'" style="margin: auto">
+                    <img src="./assets/weather-icon-png-11063.png" style="display:block;margin:auto;width: 10vh">
+                  </div>
+                </ion-row>
+                <ion-row class="centertitle text">
+                  <div class="centertitle" style="margin-top: 1vh">
+                    <h1>{{scenarioThing.thing.name}}</h1>
+                  </div>
+                </ion-row>
+              </div>
+            </ion-row>
+
+
+            <div style="margin-top: 2vh" [hidden]="!scenarioThingForm.value.thing_id"
+                 [class.fade-in]="scenarioThingForm.value.thing_id">
+              <div #thingStatus></div>
+            </div>
+
+            <button *ngIf="!loading" style="margin-top: 2vh" class='ghost-round full-width' type="submit"
+                    [disabled]="!scenarioThingForm.valid">{{saveLabel}}
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

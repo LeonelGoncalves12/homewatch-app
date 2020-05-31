@@ -1,0 +1,84 @@
+list-scenarios-page {
+  h1 {
+    color: rgb(251, 255, 244);
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    font-size: 16px;
+    margin: 0 0 0.7vh;
+    text-align: left;
+    text-transform: uppercase;
+    width: 100%;
+  }
+
+  .minor{
+    font-size: 10px;
+  }
+
+  .scenarios {
+    height: 12vh;
+    width: 12vh;
+    border: solid black;
+    border-radius: 13px;
+    border-width: 1px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1px;
+    margin-bottom: 1px;
+    display: block;
+    padding: 3px;
+    background-image: linear-gradient(141deg, #3f729b 0%, #47c7d6 51%, #2cb5e8 75%);
+  }
+
+  .active_scenario{
+    height: 12vh;
+    width: 12vh;
+    border: solid black;
+    border-radius: 13px;
+    border-width: 1px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1px;
+    margin-bottom: 1px;
+    display: block;
+    padding: 3px;
+    background-image: linear-gradient(141deg, #0c73c7 0%, #0f6fb3 51%, #1b7292 75%);
+  }
+
+  .underSlides{
+    margin-top: 1vh;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .lineborders {
+    border-bottom: 1px solid #f4f4f457;
+    border-top: 1px solid #f4f4f457;
+  }
+
+  .slideColumn {
+    height: 10vh !important;
+    width: 10vh !important;
+  }
+  .slideColumnRedTheme {
+    height: 10vh !important;
+    width: 10vh !important;
+  }
+  .slideColumnGreenTheme {
+    height: 10vh !important;
+    width: 10vh !important;
+  }
+
+  .active_slideColumn{
+    height: 10vh !important;
+    width: 10vh !important;
+
+  }
+  .active_slideColumnRedTheme{
+    height: 10vh !important;
+    width: 10vh !important;
+
+  }
+  .active_slideColumnGreenTheme{
+    height: 10vh !important;
+    width: 10vh !important;
+  }
+}

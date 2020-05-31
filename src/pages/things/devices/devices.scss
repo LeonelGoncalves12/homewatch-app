@@ -1,0 +1,189 @@
+.onoffswitch {
+  position: relative; width: 25vw;
+  -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+  font-size: 1.3vh;
+}
+.onoffswitch-checkbox {
+  display: none;
+}
+.onoffswitch-label {
+  display: block; overflow: hidden; cursor: pointer;
+  border: 1px solid ; border-radius: 11px;
+}
+
+
+.slide-label {
+  display: block; overflow: hidden; cursor: pointer;
+  border: 1px solid ;
+}
+
+
+//LIGHT
+.onoffswitch-inner {
+  display: block; width: 200%; margin-left: -100%;
+  transition: margin 0.3s ease-in 0s;
+}
+.onoffswitch-inner:before, .onoffswitch-inner:after {
+  display: block; float: left; width: 50%; height: 27px; padding: 0; line-height: 27px;
+  color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+  box-sizing: border-box;
+}
+.onoffswitch-inner:before {
+  content: "ON";
+  padding-left: 21px;
+  background: linear-gradient(141deg, #20793c 0%, #27b740 51%, #27bda8 75%)
+}
+.onoffswitch-inner:after {
+  content: "OFF";
+  padding-right: 21px;
+  background: linear-gradient(141deg, #a2061f 0%, #ff3636 61%, #27bda8 95%);  text-align: right;
+}
+//LIGHT inverse
+
+.onoffswitchinverse-inner {
+  display: block; width: 200%; margin-left: -100%;
+  transition: margin 0.3s ease-in 0s;
+}
+.onoffswitchinverse-inner:before, .onoffswitchinverse-inner:after {
+  display: block; float: left; width: 50%; height: 3vh; padding: 0; line-height: 27px;
+  color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+  box-sizing: border-box;
+}
+.onoffswitchinverse-inner:after {
+  content: "ON";
+  padding-right: 21px;
+  background: linear-gradient(141deg, #20793c 0%, #27b740 51%, #27bda8 75%);
+  text-align: right;
+}
+.onoffswitchinverse-inner:before {
+  content: "OFF";
+  padding-left: 21px;
+  background: linear-gradient(141deg, #a2061f 0%, #ff3636 61%, #27bda8 95%);
+}
+
+
+
+
+//LOCK
+.lockswitch-inner {
+  display: block; width: 200%; margin-left: -100%;
+  transition: margin 0.3s ease-in 0s;
+}
+.lockswitch-inner:before, .lockswitch-inner:after {
+  display: block; float: left; width: 50%; height: 3vh; padding: 0; line-height: 27px;
+  color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+  box-sizing: border-box;
+}
+.lockswitch-inner:before {
+  content: "LOCK";
+  padding-left: 21px;
+  background: linear-gradient(141deg, #20793c 0%, #27b740 51%, #27bda8 75%)
+}
+.lockswitch-inner:after {
+  content: "UNLOCK";
+  padding-right: 21px;
+  background: linear-gradient(141deg, #a2061f 0%, #ff3636 61%, #27bda8 95%);
+  text-align: right;
+}
+
+//lock inverse
+
+.lockswitchinverse-inner {
+  display: block; width: 200%; margin-left: -100%;
+  transition: margin 0.3s ease-in 0s;
+}
+.lockswitchinverse-inner:before, .lockswitchinverse-inner:after {
+  display: block; float: left; width: 50%; height: 3vh; padding: 0; line-height: 27px;
+  color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+  box-sizing: border-box;
+}
+.lockswitchinverse-inner:after {
+  content: "LOCK";
+  padding-right: 21px;
+  background: linear-gradient(141deg, #20793c 0%, #27b740 51%, #27bda8 75%);
+  text-align: right;
+}
+.lockswitchinverse-inner:before {
+  content: "UNLOCK";
+  padding-left: 21px;
+  background: linear-gradient(141deg, #a2061f 0%, #ff3636 61%, #27bda8 95%);
+}
+
+//WEATHER
+.weather-inner {
+  display: block; width: 100%; height: 3vh; padding: 0; line-height: 27px;
+  color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+  box-sizing: border-box;
+  background-image: linear-gradient(141deg, #3f729b 0%, #47c7d6 51%, #2cb5e8 75%);
+  text-align: center
+}
+
+
+
+
+
+.onoffswitch-switch {
+  display: block; width: 5vw; margin: 5px;
+  background: #FFFFFF;
+  position: absolute; top: 0; bottom: 0;
+  right: 16vw;
+  border: 2px solid ; border-radius: 11px;
+  transition: all 0.3s ease-in 0s;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+  margin-left: 0;
+}
+
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitchinverse-inner {
+  margin-left: 0;
+}
+
+.onoffswitch-checkbox:checked + .onoffswitch-label .lockswitch-inner {
+  margin-left: 0;
+}
+
+.onoffswitch-checkbox:checked + .onoffswitch-label .lockswitchinverse-inner {
+  margin-left: 0;
+}
+
+
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+  right: 0px;
+}
+
+.slideActive{
+  background-image: linear-gradient(141deg, #0c73c7 0%, #0f6fb3 51%, #1b7292 75%);
+
+}
+
+.slideActiveRedTheme{
+  background-image: linear-gradient(141deg, #b31515 0%, #ca0e17 51%, #a9191d 75%);;
+
+}
+
+.slideActiveGreenTheme{
+  background-image: linear-gradient(141deg, #108e3f 0%, #199e35 51%, #1c9245 75%);;
+
+}
+
+
+.slideInactive{
+  background-image: linear-gradient(141deg, #3f729b 0%, #47c7d6 51%, #2cb5e8 75%);
+}
+
+.slideInactiveRedTheme{
+  background-image: linear-gradient(141deg, #da624f 0%, #ec6239 51%, #e67e60 75%);
+}
+
+.slideInactiveGreenTheme{
+  background-image: linear-gradient(141deg, #37c153 0%, #5ed665 51%, #1de85a 75%);
+}
+
+
+.sensorActive{
+  border-color: #1b7292
+}
+.ion-slides-device{
+  padding-top: 0;
+  padding-bottom: 0;
+}

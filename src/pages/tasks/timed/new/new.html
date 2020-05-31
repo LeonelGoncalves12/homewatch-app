@@ -1,0 +1,567 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      <div *ngIf="editMode; else new">{{editLabel}}</div>
+      <ng-template #new>{{createTimedTaskLabel}}</ng-template>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content
+  [ngClass]="{ 'homepage': theme == 'default', 'homepageRedTheme': theme=='red' , 'homepageGreenTheme': theme=='green' }">
+  <div class='content space'>
+    <button *ngIf="editMode" style="float: right; right: 5%; margin-top: 1vh;margin-bottom: 1vh;width: 26vw"
+            class='seeall'
+            [ngClass]="{ 'seeallDefaultTheme': theme == 'default', 'seeallRedTheme': theme=='red' , 'seeallGreenTheme': theme=='green' }"
+            (click)="deleteTimed()">{{removeTaskLabel}}
+    </button>
+
+    <form ion-list no-lines padding-bottom [formGroup]="timedTaskForm" (ngSubmit)="onSubmit(timedTaskForm)">
+
+      <div class="newtoolbar" style="margin-top: 1vh" *ngIf="!editMode">
+        <ion-toolbar class="toolbarTasks"
+                     [ngClass]="{ 'defaultTheme': theme == 'default', 'redTheme': theme=='red' , 'greenTheme': theme=='green' }">
+          <ion-segment [(ngModel)]="toApply" (ngModelChange)="onToApplyChange($event)"
+                       [ngModelOptions]="{standalone: true}">
+            <ion-segment-button value="thing">
+              {{deviceLabel}}
+            </ion-segment-button>
+            <ion-segment-button value="scenario">
+              {{scenarioLabel}}
+            </ion-segment-button>
+          </ion-segment>
+        </ion-toolbar>
+      </div>
+
+
+      <div [ngSwitch]="toApply" style="height: 100%">
+        <div *ngSwitchCase="'thing'">
+          <div *ngIf="editMode">
+            <ion-row *ngIf="editMode" class="full">
+              <div class="centertitle">
+                <ion-row class="roomicon" margin-top="2vh">
+                  <div *ngIf="thing.type === 'Things::Light'" style="margin: auto">
+                    <img src="./assets/Light_color.png" style="display:block;margin:auto;width: 15vh;">
+                  </div>
+                  <div *ngIf="thing.type === 'Things::Lock'" style="margin: auto">
+                    <img src="./assets/Lock.ico" style="display:block;margin:auto;width: 15vh">
+                  </div>
+                  <div *ngIf="thing.type === 'Things::Thermostat'" style="margin: auto">
+                    <img src="./assets/thermostat_icon.png" style="display:block;margin:auto;width: 15vh">
+                  </div>
+                  <div *ngIf="thing.type === 'Things::MotionSensor'" style="margin: auto">
+                    <img src="./assets/motion_sensor.png" style="display:block;margin:auto;width: 15vh">
+                  </div>
+                  <div *ngIf="thing.type === 'Things::Weather'" style="margin: auto">
+                    <img src="./assets/weather-icon-png-11063.png" style="display:block;margin:auto;width: 15vh">
+                  </div>
+                </ion-row>
+                <ion-row class="centertitle text">
+                  <div class="centertitle" style="margin-top: 1vh; margin-bottom: 1vh">
+                    <h1>{{thing.name}}</h1>
+                  </div>
+                </ion-row>
+              </div>
+            </ion-row>
+          </div>
+          <div *ngIf="!editMode">
+            <h1 style="margin-top:3vh">{{chooseDeviceLabel}}</h1>
+            <div style="padding: 2vw">
+
+              <div class="div-slides" style="margin-top: 1vh;">
+                <div *ngIf="things.length>0" class="centertitle text">
+                <ion-slides slidesPerView="3" spaceBetween="1" class="lineborders"
+                            [ngClass]="{ 'slides': theme == 'default',  'slidesRedTheme': theme=='red' , 'slidesGreenTheme': theme=='green' }">
+
+                    <ion-slide *ngFor="let thing of assignableThings">
+                      <ion-col col-3 class="roomicon" (click)="activething(thing, 1)">
+                        <div *ngIf="thing.type === 'Things::Light'">
+                          <img src="./assets/Light_color.png"
+                               [ngClass]="[ indexThing == thing.id ? theme == 'default' ? 'active_slideColumn' : theme == 'red' ? 'active_slideColumnRedTheme' :   theme == 'green' ? 'active_slideColumnGreenTheme' : '' : indexThing != thing.id  ? theme == 'default' ? 'slideColumn' : theme == 'red' ? 'slideColumnRedTheme' :   theme == 'green' ? 'slideColumnGreenTheme' : '' :'']">
+                        </div>
+                        <div *ngIf="thing.type === 'Things::Lock'">
+                          <img src="./assets/Lock.ico"
+                               [ngClass]="[ indexThing == thing.id ? theme == 'default' ? 'active_slideColumn' : theme == 'red' ? 'active_slideColumnRedTheme' :   theme == 'green' ? 'active_slideColumnGreenTheme' : '' : indexThing != thing.id  ? theme == 'default' ? 'slideColumn' : theme == 'red' ? 'slideColumnRedTheme' :   theme == 'green' ? 'slideColumnGreenTheme' : '' :'']">
+                        </div>
+                        <div *ngIf="thing.type === 'Things::Thermostat'">
+                          <img src="./assets/thermostat_icon.png"
+                               [ngClass]="[ indexThing == thing.id ? theme == 'default' ? 'active_slideColumn' : theme == 'red' ? 'active_slideColumnRedTheme' :   theme == 'green' ? 'active_slideColumnGreenTheme' : '' : indexThing != thing.id  ? theme == 'default' ? 'slideColumn' : theme == 'red' ? 'slideColumnRedTheme' :   theme == 'green' ? 'slideColumnGreenTheme' : '' :'']">
+                        </div>
+                        <div *ngIf="thing.type === 'Things::MotionSensor'">
+                          <img src="./assets/motion_sensor.png"
+                               [ngClass]="[ indexThing == thing.id ? theme == 'default' ? 'active_slideColumn' : theme == 'red' ? 'active_slideColumnRedTheme' :   theme == 'green' ? 'active_slideColumnGreenTheme' : '' : indexThing != thing.id  ? theme == 'default' ? 'slideColumn' : theme == 'red' ? 'slideColumnRedTheme' :   theme == 'green' ? 'slideColumnGreenTheme' : '' :'']">
+                        </div>
+                        <div *ngIf="thing.type === 'Things::Weather'">
+                          <img src="./assets/weather-icon-png-11063.png"
+                               [ngClass]="[ indexThing == thing.id ? theme == 'default' ? 'active_slideColumn' : theme == 'red' ? 'active_slideColumnRedTheme' :   theme == 'green' ? 'active_slideColumnGreenTheme' : '' : indexThing != thing.id  ? theme == 'default' ? 'slideColumn' : theme == 'red' ? 'slideColumnRedTheme' :   theme == 'green' ? 'slideColumnGreenTheme' : '' :'']">
+                        </div>
+                      </ion-col>
+                      <ion-col col-9 class="centertitle text">
+                        {{thing.name}}
+                      </ion-col>
+                    </ion-slide>
+
+                </ion-slides>
+                </div>
+                <div *ngIf="things.length==0" class="centertitle text">
+                  {{noDevicesInstalledLabel}}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div [hidden]="!timedTaskForm.value.thing_id" [class.fade-in]="timedTaskForm.value.thing_id"
+               style="margin-top: 1vh;">
+            <div>
+              <div #thingStatus></div>
+            </div>
+          </div>
+        </div>
+
+        <div *ngSwitchCase="'scenario'">
+          <div *ngIf="editMode">
+            <ion-row *ngIf="editMode" class="full">
+              <div class="centertitle">
+                <ion-row class="roomicon" margin-top="2vh">
+                  <div *ngIf="timedTask.scenario.icon === '1'" style="margin: auto">
+                    <img src="./assets/popcorn.png" style="display:block;margin:auto;width: 15vh;">
+                  </div>
+                  <div *ngIf="timedTask.scenario.icon === '2'" style="margin: auto">
+                    <img src="./assets/Light_color.png" style="display:block;margin:auto;width: 15vh">
+                  </div>
+                  <div *ngIf="timedTask.scenario.icon === '3'" style="margin: auto">
+                    <img src="./assets/Lock.ico" style="display:block;margin:auto;width: 15vh">
+                  </div>
+
+                </ion-row>
+                <ion-row class="centertitle text">
+                  <div class="centertitle" style="margin-top: 1vh; margin-bottom: 1vh">
+                    <h1>{{timedTask.scenario.name}}</h1>
+                  </div>
+                </ion-row>
+              </div>
+            </ion-row>
+          </div>
+          <div *ngIf="!editMode">
+            <h1 style="margin-top:3vh">{{chooseScenarioLabel}}</h1>
+            <div style="padding: 2vw">
+
+
+              <div class="div-slides " style="margin-top: 1vh;">
+                <div *ngIf="scenarios.length>0" class="centertitle text">
+                <ion-slides slidesPerView="3" spaceBetween="1" class="lineborders"
+                            [ngClass]="{ 'slides': theme == 'default',  'slidesRedTheme': theme=='red' , 'slidesGreenTheme': theme=='green' }">
+
+                    <ion-slide *ngFor="let scenario of scenarios">
+                      <ion-col col-3 class="roomicon" (click)="activescenario(scenario, 1)">
+                        <div *ngIf="scenario.icon === '1'">
+                          <img src="./assets/popcorn.png"
+                               [ngClass]="[ indexScenario == scenario.id ? theme == 'default' ? 'active_slideColumn' : theme == 'red' ? 'active_slideColumnRedTheme' :   theme == 'green' ? 'active_slideColumnGreenTheme' : '' : indexScenario != scenario.id   ? theme == 'default' ? 'slideColumn' : theme == 'red' ? 'slideColumnRedTheme' :   theme == 'green' ? 'slideColumnGreenTheme' : '' :'']">
+
+                        </div>
+                        <div *ngIf="scenario.icon === '2'">
+                          <img src="./assets/Light_color.png"
+                               [ngClass]="[ indexScenario == scenario.id ? theme == 'default' ? 'active_slideColumn' : theme == 'red' ? 'active_slideColumnRedTheme' :   theme == 'green' ? 'active_slideColumnGreenTheme' : '' : indexScenario != scenario.id   ? theme == 'default' ? 'slideColumn' : theme == 'red' ? 'slideColumnRedTheme' :   theme == 'green' ? 'slideColumnGreenTheme' : '' :'']">
+                        </div>
+                        <div *ngIf="scenario.icon === '3'">
+                          <img src="./assets/Lock.ico"
+                               [ngClass]="[ indexScenario == scenario.id ? theme == 'default' ? 'active_slideColumn' : theme == 'red' ? 'active_slideColumnRedTheme' :   theme == 'green' ? 'active_slideColumnGreenTheme' : '' : indexScenario != scenario.id   ? theme == 'default' ? 'slideColumn' : theme == 'red' ? 'slideColumnRedTheme' :   theme == 'green' ? 'slideColumnGreenTheme' : '' :'']">
+                        </div>
+
+                      </ion-col>
+                      <ion-col col-9 class="centertitle text">
+                        {{scenario.name}}
+                      </ion-col>
+                    </ion-slide>
+
+                </ion-slides>
+                </div>
+                <div *ngIf="scenarios.length==0" class="centertitle text">
+                  {{noScenariosInstalledLabel}}
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h1 style="margin-top:2vh; padding-bottom: 2vw">{{whenLabel}} ?</h1>
+      <div class="newtoolbar  whentoolbar " style="margin-bottom: 1vh ">
+        <ion-toolbar
+          [ngClass]="{ 'defaultTheme': theme == 'default', 'redTheme': theme=='red' , 'greenTheme': theme=='green' }">
+          <ion-segment [(ngModel)]="time_type" (ngModelChange)="onTypeChange($event)"
+                       [ngModelOptions]="{standalone: true}">
+
+            <ion-segment-button class="whentoolbar" value="minutes">
+              {{minutesLabel}}
+            </ion-segment-button>
+            <ion-segment-button class="whentoolbar" value="hours">
+              {{hoursLabel}}
+            </ion-segment-button>
+            <ion-segment-button class="whentoolbar" value="daysMonth">
+              {{daysMonthLabel}}
+            </ion-segment-button>
+            <ion-segment-button class="whentoolbar" value="months">
+              {{monthsLabel}}
+            </ion-segment-button>
+            <ion-segment-button class="whentoolbar" value="daysWeek">
+              {{daysWeekLabel}}
+            </ion-segment-button>
+
+          </ion-segment>
+        </ion-toolbar>
+      </div>
+
+      <div style="padding: 3vw; margin-bottom: 5vh">
+        <div [ngSwitch]="time_type">
+          <div *ngSwitchCase="'minutes'">
+
+
+            <ion-row class=" borderTimedTasks" (click)="choose_option('minutes', 1)"
+                     [ngClass]="[ indexMinutes === 1 ? theme == 'default' ? 'active_thing' : theme == 'red' ? 'active_thingRedTheme' :   theme == 'green' ? 'active_thingGreenTheme' : ''  : indexMinutes != 1 ? theme == 'default' ? 'border' : theme == 'red' ? 'borderRedTheme' :   theme == 'green' ? 'borderGreenTheme' : '' :'']">
+
+              <ion-item no-lines style="background: transparent">
+                <ion-label style="max-width: 0px; margin-right:0px"></ion-label>
+                <div class="title text" item-content>{{everyMinuteLabel}}.</div>
+              </ion-item>
+            </ion-row>
+
+
+            <ion-row class=" borderTimedTasks" (click)="choose_option('minutes', 2)"
+                     [ngClass]="[ indexMinutes === 2 ? theme == 'default' ? 'active_thing' : theme == 'red' ? 'active_thingRedTheme' :   theme == 'green' ? 'active_thingGreenTheme' : ''  : indexMinutes != 2 ? theme == 'default' ? 'border' : theme == 'red' ? 'borderRedTheme' :   theme == 'green' ? 'borderGreenTheme' : '' :'']">
+
+              <ion-item no-lines style="background: transparent">
+
+                <div class="title text" style="text-align: left">{{everyLabel}}</div>
+                <div item-content style="height: 27px;width: 8vh">
+                  <ion-slides class="ion-slides-device" item-content slidesPerView="3" spaceBetween="2"
+                              style="border-radius: 8px;"
+                              [ngClass]="{ 'slides': theme == 'default',  'slidesRedTheme': theme=='red' , 'slidesGreenTheme': theme=='green' }">
+                    <ion-slide *ngFor="let minute of minutesArray" (click)="chooseIndex(minute, 'minute')"
+                               [ngClass]="[ minute == intervalMinutes ? theme == 'default' ? 'activeSelect' : theme == 'red' ? 'activeSelectRedTheme' :   theme == 'green' ? 'activeSelectGreenTheme' : ''  :'']">
+                      <label class="text" style="font-size: 12px"
+                             (click)="interval('minutes',minute,'intervalMinutes')"> {{minute}}</label>
+                    </ion-slide>
+                  </ion-slides>
+                </div>
+                <div item-content style="padding-left:1vh;padding-right:1vh" class="title text">{{minutesLabel}}.
+                  {{startAtLabel}}:
+                </div>
+                <div item-content style="height: 27px;width: 8vh">
+                  <ion-slides class="ion-slides-device" item-content slidesPerView="3" spaceBetween="2"
+                              style="border-radius: 8px"
+                              [ngClass]="{ 'slides': theme == 'default',  'slidesRedTheme': theme=='red' , 'slidesGreenTheme': theme=='green' }">
+                    <ion-slide *ngFor="let minute of minutesArray" (click)="chooseIndex(minute, 'minuteStart')"
+                               [ngClass]="[ minute == startAtMinutes ? theme == 'default' ? 'activeSelect' : theme == 'red' ? 'activeSelectRedTheme' :   theme == 'green' ? 'activeSelectGreenTheme' : ''  :'']">
+                      <label class="text" style="font-size: 12px" (click)="interval('minutes',minute,'startAt')">
+                        {{minute}}</label>
+
+                    </ion-slide>
+                  </ion-slides>
+                </div>
+
+              </ion-item>
+            </ion-row>
+
+
+            <ion-row class="borderMinutes" (click)="choose_option('minutes', 3)"
+                     [ngClass]="[ indexMinutes === 3 ? theme == 'default' ? 'active_thing' : theme == 'red' ? 'active_thingRedTheme' :   theme == 'green' ? 'active_thingGreenTheme' : ''  : indexMinutes != 3 ? theme == 'default' ? 'border' : theme == 'red' ? 'borderRedTheme' :   theme == 'green' ? 'borderGreenTheme' : '' :'']">
+              <ion-list>
+                <ion-item no-lines style="background: transparent">
+                  <ion-label style="max-width: 0px; margin-right:0px"></ion-label>
+                  <div class="title text" item-content>{{minutesLabel}}:</div>
+                </ion-item>
+                <ion-item no-lines style="background: transparent;padding-left: 0">
+                  <ion-grid item-content>
+                    <ion-row item-content style="text-align:center;">
+
+                      <ion-col col-1 *ngFor="let minute of minutesArray;index as i"
+                               style="display: inline-grid;margin-bottom:3px"
+                               (click)="active('minutes',i)"
+                               [ngClass]="[ minutes[i] === true ? theme == 'default' ? 'active_time' : theme == 'red' ? 'active_timeRedTheme' :   theme == 'green' ? 'active_timeGreenTheme' : ''  :'']">
+
+
+                        <div class="text" item-content style="font-size:2.5vw">{{minute}}</div>
+
+                      </ion-col>
+
+                    </ion-row>
+                  </ion-grid>
+                </ion-item>
+              </ion-list>
+            </ion-row>
+          </div>
+
+          <div *ngSwitchCase="'hours'">
+            <ion-row class=" borderTimedTasks" (click)="choose_option('hours', 1)"
+                     [ngClass]="[ indexHours === 1 ? theme == 'default' ? 'active_thing' : theme == 'red' ? 'active_thingRedTheme' :   theme == 'green' ? 'active_thingGreenTheme' : ''  : indexHours != 1 ? theme == 'default' ? 'border' : theme == 'red' ? 'borderRedTheme' :   theme == 'green' ? 'borderGreenTheme' : '' :'']">
+              <ion-item no-lines style="background: transparent">
+                <ion-label style="max-width: 0px; margin-right:0px"></ion-label>
+                <div class="title text" item-content>{{everyHourLabel}}.</div>
+              </ion-item>
+            </ion-row>
+
+            <ion-row class=" borderTimedTasks" (click)="choose_option('hours', 2)"
+                     [ngClass]="[ indexHours === 2 ? theme == 'default' ? 'active_thing' : theme == 'red' ? 'active_thingRedTheme' :   theme == 'green' ? 'active_thingGreenTheme' : ''  : indexHours != 2 ? theme == 'default' ? 'border' : theme == 'red' ? 'borderRedTheme' :   theme == 'green' ? 'borderGreenTheme' : '' :'']">
+              <ion-item no-lines style="background: transparent">
+
+                <div class="title text" style="text-align: left">{{everyLabel}}</div>
+                <div item-content style="height: 27px;width: 8vh">
+                  <ion-slides class="ion-slides-device" item-content slidesPerView="3" spaceBetween="2"
+                              style="border-radius: 8px;"
+                              [ngClass]="{ 'slides': theme == 'default',  'slidesRedTheme': theme=='red' , 'slidesGreenTheme': theme=='green' }">
+
+                    <ion-slide *ngFor="let hour of hoursArray" (click)="chooseIndex(hour, 'hour')"
+                               [ngClass]="[ hour == intervalHours ? theme == 'default' ? 'activeSelect' : theme == 'red' ? 'activeSelectRedTheme' :   theme == 'green' ? 'activeSelectGreenTheme' : ''  :'']">
+                      <label class="text" style="font-size: 12px" (click)="interval('hours',hour,'intervalHours')">
+                        {{hour}}</label>
+
+                    </ion-slide>
+                  </ion-slides>
+                </div>
+
+                <div item-content style="padding-left:1vh;padding-right:1vh" class="title text">{{hoursLabel}}.
+                  {{startAtLabel}}:
+                </div>
+                <div item-content style="height: 27px;width: 8vh">
+                  <ion-slides class="ion-slides-device" item-content slidesPerView="3" spaceBetween="2"
+                              style="border-radius: 8px"
+                              [ngClass]="{ 'slides': theme == 'default',  'slidesRedTheme': theme=='red' , 'slidesGreenTheme': theme=='green' }">
+                    <ion-slide *ngFor="let hour of hoursArray" (click)="chooseIndex(hour, 'hourStart')"
+                               [ngClass]="[ hour == startAtHours ? theme == 'default' ? 'activeSelect' : theme == 'red' ? 'activeSelectRedTheme' :   theme == 'green' ? 'activeSelectGreenTheme' : ''  :'']">
+
+                      <label class="text" style="font-size: 12px" (click)="interval('hours',hour,'startAt')">
+                        {{hour}}</label>
+
+                    </ion-slide>
+                  </ion-slides>
+                </div>
+
+              </ion-item>
+
+            </ion-row>
+
+            <ion-row class="borderMinutes" (click)="choose_option('hours', 3)"
+                     [ngClass]="[ indexHours === 3 ? theme == 'default' ? 'active_thing' : theme == 'red' ? 'active_thingRedTheme' :   theme == 'green' ? 'active_thingGreenTheme' : ''  : indexHours != 3 ? theme == 'default' ? 'border' : theme == 'red' ? 'borderRedTheme' :   theme == 'green' ? 'borderGreenTheme' : '' :'']">
+              <ion-list>
+                <ion-item no-lines style="background: transparent">
+                  <ion-label style="max-width: 0px; margin-right:0px"></ion-label>
+                  <div class="title text" item-content>{{hoursLabel}}:</div>
+                </ion-item>
+                <ion-item no-lines style="background: transparent;padding-left: 0">
+                  <ion-grid item-content>
+                    <ion-row item-content style="text-align:center;">
+                      <ion-col col-1 *ngFor="let hour of hoursArray;index as i"
+                               style="display: inline-grid;margin-bottom:3px"
+                               (click)="active('hours',i)"
+                               [ngClass]="[ hours[i] === true ? theme == 'default' ? 'active_time' : theme == 'red' ? 'active_timeRedTheme' :   theme == 'green' ? 'active_timeGreenTheme' : ''  :'']">
+
+                        <div class="text" item-content style="font-size:2.5vw">{{hour}}</div>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </ion-item>
+              </ion-list>
+            </ion-row>
+          </div>
+
+          <div *ngSwitchCase="'daysMonth'">
+
+            <ion-row class=" borderTimedTasks" (click)="choose_option('daysMonth', 1)"
+                     [ngClass]="[ indexDaysMonth  === 1 ? theme == 'default' ? 'active_thing' : theme == 'red' ? 'active_thingRedTheme' :   theme == 'green' ? 'active_thingGreenTheme' : ''  : indexDaysMonth  != 1 ? theme == 'default' ? 'border' : theme == 'red' ? 'borderRedTheme' :   theme == 'green' ? 'borderGreenTheme' : '' :'']">
+              <ion-item no-lines style="background: transparent">
+                <ion-label style="max-width: 0px; margin-right:0px"></ion-label>
+                <div class="title text" item-content>{{everyDayLabel}}.</div>
+              </ion-item>
+            </ion-row>
+
+
+            <ion-row class="border borderTimedTasks" (click)="choose_option('daysMonth', 2)"
+                     [ngClass]="[ indexDaysMonth  === 2 ? theme == 'default' ? 'active_thing' : theme == 'red' ? 'active_thingRedTheme' :   theme == 'green' ? 'active_thingGreenTheme' : ''  : indexDaysMonth  != 2 ? theme == 'default' ? 'border' : theme == 'red' ? 'borderRedTheme' :   theme == 'green' ? 'borderGreenTheme' : '' :'']">
+
+              <ion-item no-lines style="background: transparent">
+
+                <div class="title text" style="text-align: left">{{everyLabel}}</div>
+                <div item-content style="height: 27px;width: 8vh">
+                  <ion-slides class="ion-slides-device" item-content slidesPerView="3" spaceBetween="2"
+                              style="border-radius: 8px;"
+                              [ngClass]="{ 'slides': theme == 'default',  'slidesRedTheme': theme=='red' , 'slidesGreenTheme': theme=='green' }">
+
+                    <ion-slide *ngFor="let dayMonth of daysMonthArray" (click)="chooseIndex(dayMonth, 'dayMonth')"
+                               [ngClass]="[ dayMonth == intervalDaysMonth ? theme == 'default' ? 'activeSelect' : theme == 'red' ? 'activeSelectRedTheme' :   theme == 'green' ? 'activeSelectGreenTheme' : ''  :'']">
+
+                      <label class="text" style="font-size: 12px"
+                             (click)="interval('daysMonth',dayMonth,'intervalDaysMonth')"> {{dayMonth}}</label>
+
+                    </ion-slide>
+                  </ion-slides>
+                </div>
+                <div item-content style="padding-left:1vh;padding-right:1vh" class="title text">{{daysLabel}}.
+                  {{startAtLabel}}:
+                </div>
+                <div item-content style="height: 27px;width: 8vh">
+                  <ion-slides class="ion-slides-device" item-content slidesPerView="3" spaceBetween="2"
+                              style="border-radius: 8px"
+                              [ngClass]="{ 'slides': theme == 'default',  'slidesRedTheme': theme=='red' , 'slidesGreenTheme': theme=='green' }">
+                    <ion-slide *ngFor="let dayMonth of daysMonthArray" (click)="chooseIndex(dayMonth, 'dayMonthStart')"
+                               [ngClass]="[ dayMonth == startAtDaysMonth ? theme == 'default' ? 'activeSelect' : theme == 'red' ? 'activeSelectRedTheme' :   theme == 'green' ? 'activeSelectGreenTheme' : ''  :'']">
+                      <label class="text" style="font-size: 12px" (click)="interval('daysMonth',dayMonth,'startAt')">
+                        {{dayMonth}}</label>
+
+                    </ion-slide>
+                  </ion-slides>
+                </div>
+
+              </ion-item>
+
+            </ion-row>
+
+            <ion-row class="borderMinutes" (click)="choose_option('daysMonth', 3)"
+                     [ngClass]="[ indexDaysMonth  === 3 ? theme == 'default' ? 'active_thing' : theme == 'red' ? 'active_thingRedTheme' :   theme == 'green' ? 'active_thingGreenTheme' : ''  : indexDaysMonth  != 3 ? theme == 'default' ? 'border' : theme == 'red' ? 'borderRedTheme' :   theme == 'green' ? 'borderGreenTheme' : '' :'']">
+              <ion-list>
+                <ion-item no-lines style="background: transparent">
+                  <ion-label style="max-width: 0px; margin-right:0px"></ion-label>
+                  <div class="title text" item-content>{{daysLabel}}:</div>
+                </ion-item>
+                <ion-item no-lines style="background: transparent;padding-left: 0">
+                  <ion-grid item-content>
+                    <ion-row item-content style="text-align:center;">
+                      <ion-col col-1 *ngFor="let dayMonth of daysMonthArray;index as i"
+                               style="display: inline-grid;margin-bottom:3px"
+                               (click)="active('daysMonth',i)"
+                               [ngClass]="[ daysMonth[i] === true ? theme == 'default' ? 'active_time' : theme == 'red' ? 'active_timeRedTheme' :   theme == 'green' ? 'active_timeGreenTheme' : ''  :'']">
+
+                        <div class="text" item-content style="font-size:2.5vw">{{dayMonth}}</div>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </ion-item>
+              </ion-list>
+            </ion-row>
+
+          </div>
+
+
+          <div *ngSwitchCase="'months'">
+
+
+            <ion-row class=" borderTimedTasks" (click)="choose_option('months', 1)"
+                     [ngClass]="[ indexMonth === 1 ? theme == 'default' ? 'active_thing' : theme == 'red' ? 'active_thingRedTheme' :   theme == 'green' ? 'active_thingGreenTheme' : ''  : indexMonth != 1 ? theme == 'default' ? 'border' : theme == 'red' ? 'borderRedTheme' :   theme == 'green' ? 'borderGreenTheme' : '' :'']">
+              <ion-item no-lines style="background: transparent">
+                <ion-label style="max-width: 0px; margin-right:0px"></ion-label>
+                <div class="title text" item-content>{{everyMonthLabel}}.</div>
+              </ion-item>
+            </ion-row>
+
+
+            <ion-row class=" borderTimedTasks" (click)="choose_option('months', 2)"
+                     [ngClass]="[ indexMonth === 2 ? theme == 'default' ? 'active_thing' : theme == 'red' ? 'active_thingRedTheme' :   theme == 'green' ? 'active_thingGreenTheme' : ''  : indexMonth != 2 ? theme == 'default' ? 'border' : theme == 'red' ? 'borderRedTheme' :   theme == 'green' ? 'borderGreenTheme' : '' :'']">
+              <ion-item no-lines style="background: transparent">
+
+                <div class="title text" style="text-align: left">{{everyLabel}}</div>
+                <div item-content style="height: 27px;width: 8vh">
+                  <ion-slides class="ion-slides-device" item-content slidesPerView="3" spaceBetween="2"
+                              style="border-radius: 8px;"
+                              [ngClass]="{ 'slides': theme == 'default',  'slidesRedTheme': theme=='red' , 'slidesGreenTheme': theme=='green' }">
+
+                    <ion-slide *ngFor="let month of monthsArray" (click)="chooseIndex(month, 'month')"
+                               [ngClass]="[ month == intervalMonths ? theme == 'default' ? 'activeSelect' : theme == 'red' ? 'activeSelectRedTheme' :   theme == 'green' ? 'activeSelectGreenTheme' : ''  :'']">
+
+                      <label class="text" style="font-size: 12px" (click)="interval('months',month,'intervalMonths')">
+                        {{month}}</label>
+
+                    </ion-slide>
+                  </ion-slides>
+                </div>
+                <div item-content style="padding-left:1vh;padding-right:1vh" class="title text">{{monthsLabel}}.
+                  {{startAtLabel}}:
+                </div>
+                <div item-content style="height: 27px;width: 8vh">
+                  <ion-slides class="ion-slides-device" item-content slidesPerView="3" spaceBetween="2"
+                              style="border-radius: 8px"
+                              [ngClass]="{ 'slides': theme == 'default',  'slidesRedTheme': theme=='red' , 'slidesGreenTheme': theme=='green' }">
+                    <ion-slide *ngFor="let month of monthsArray" (click)="chooseIndex(month, 'monthStart')"
+                               [ngClass]="[ month == startAtMonths ? theme == 'default' ? 'activeSelect' : theme == 'red' ? 'activeSelectRedTheme' :   theme == 'green' ? 'activeSelectGreenTheme' : ''  :'']">
+                      <label class="text" style="font-size: 12px" (click)="interval('months',month,'startAt')">
+                        {{month}}</label>
+
+                    </ion-slide>
+                  </ion-slides>
+                </div>
+
+              </ion-item>
+
+            </ion-row>
+
+            <ion-row class="borderMinutes" (click)="choose_option('months', 3)"
+                     [ngClass]="[ indexMonth === 3 ? theme == 'default' ? 'active_thing' : theme == 'red' ? 'active_thingRedTheme' :   theme == 'green' ? 'active_thingGreenTheme' : ''  : indexMonth != 3 ? theme == 'default' ? 'border' : theme == 'red' ? 'borderRedTheme' :   theme == 'green' ? 'borderGreenTheme' : '' :'']">
+              <ion-list>
+                <ion-item no-lines style="background: transparent">
+                  <ion-label style="max-width: 0px; margin-right:0px"></ion-label>
+                  <div class="title text" item-content>{{monthsLabel}}:</div>
+                </ion-item>
+                <ion-item no-lines style="background: transparent;padding-left: 0">
+                  <ion-grid item-content>
+                    <ion-row item-content style="text-align:center;">
+                      <ion-col col-1 *ngFor="let month of monthsArray;index as i"
+                               style="display: inline-grid;margin-bottom:3px"
+                               (click)="active('months',i)"
+                               [ngClass]="[ months[i] === true ? theme == 'default' ? 'active_time' : theme == 'red' ? 'active_timeRedTheme' :   theme == 'green' ? 'active_timeGreenTheme' : ''  :'']">
+
+                        <div class="text" item-content style="font-size:2.5vw">{{month}}</div>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </ion-item>
+              </ion-list>
+            </ion-row>
+
+
+          </div>
+
+
+          <div *ngSwitchCase="'daysWeek'">
+            <ion-row class="border borderTimedTasks" (click)="choose_option('daysWeek', 1)"
+                     [ngClass]="[ indexDaysWeek === 1 ? theme == 'default' ? 'active_thing' : theme == 'red' ? 'active_thingRedTheme' :   theme == 'green' ? 'active_thingGreenTheme' : ''  : indexDaysWeek != 1 ? theme == 'default' ? 'border' : theme == 'red' ? 'borderRedTheme' :   theme == 'green' ? 'borderGreenTheme' : '' :'']">
+              <ion-item no-lines style="background: transparent">
+                <ion-label style="max-width: 0px; margin-right:0px"></ion-label>
+                <div class="title text" item-content>{{everyDaysWeekLabel}}.</div>
+              </ion-item>
+            </ion-row>
+
+
+            <ion-row class="borderMinutes" (click)="choose_option('daysWeek', 3)"
+                     [ngClass]="[ indexDaysWeek === 3 ? theme == 'default' ? 'active_thing' : theme == 'red' ? 'active_thingRedTheme' :   theme == 'green' ? 'active_thingGreenTheme' : ''  : indexDaysWeek != 3 ? theme == 'default' ? 'border' : theme == 'red' ? 'borderRedTheme' :   theme == 'green' ? 'borderGreenTheme' : '' :'']">
+              <ion-list>
+                <ion-item no-lines style="background: transparent">
+                  <ion-label style="max-width: 0px; margin-right:0px"></ion-label>
+                  <div class="title text" item-content>{{daysLabel}}:</div>
+                </ion-item>
+                <ion-item no-lines style="background: transparent;padding-left: 0">
+                  <ion-grid item-content>
+                    <ion-row item-content style="text-align:center;">
+                      <ion-col *ngFor="let dayWeek of daysWeekArray;index as i"
+                               style="display: inline-grid;margin-bottom:3px"
+                               (click)="active('daysWeek',i)"
+
+                               [ngClass]="[ daysWeek[i] === true ? theme == 'default' ? 'active_time' : theme == 'red' ? 'active_timeRedTheme' :   theme == 'green' ? 'active_timeGreenTheme' : ''  :'']">
+
+                        <div class="text" item-content style="font-size:2.5vw">{{dayWeek}}</div>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </ion-item>
+              </ion-list>
+            </ion-row>
+          </div>
+
+        </div>
+      </div>
+
+      <button class='ghost-round full-width' type="submit" [disabled]="!validForm()" style="margin-top: 1vh">
+        {{saveLabel}}
+      </button>
+    </form>
+  </div>
+</ion-content>

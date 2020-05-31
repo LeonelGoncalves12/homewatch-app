@@ -1,0 +1,87 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title *ngIf="editMode">{{editLabel}}</ion-title>
+    <ion-title *ngIf="!editMode"> {{addRoomLabel}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content
+  [ngClass]="{ 'homepage': theme == 'default', 'homepageRedTheme': theme=='red' , 'homepageGreenTheme': theme=='green' }">
+  <div class='content'>
+    <div class='input-fields' style="height: 100%">
+      <div *ngIf="loading" class="loadingContainter">
+        <img class="loadingElement" src="./assets/loadingGif.svg">
+      </div>
+      <div *ngIf="!loading" style="height: 100%">
+        <form [formGroup]="roomForm" (ngSubmit)="onSubmit(roomForm)">
+          <ion-row class="full">
+            <div class="centertitle" style="margin-top: 2vh;">
+              <h1>{{roomsLabel}}</h1>
+            </div>
+            <button *ngIf="editMode" style="float: right;position: absolute; right: 5%;" class='seeall oversize'
+                    [ngClass]="{ 'seeallDefaultTheme': theme == 'default', 'seeallRedTheme': theme=='red' , 'seeallGreenTheme': theme=='green' }"
+                    (click)="deleteRoom(room)">{{removeRoomLabel}}
+            </button>
+          </ion-row>
+          <div class="div-slides " style="margin-top: 1vh;">
+            <ion-slides slidesPerView="3" spaceBetween="1"
+                        [ngClass]="{ 'slides': theme == 'default',  'slidesRedTheme': theme=='red' , 'slidesGreenTheme': theme=='green' }"
+                        class="lineborders" style="padding-bottom: 2vh">
+              <ion-slide *ngFor="let room of rooms" ion-long-press [interval]="1000">
+                <ion-row class="roomicon" (click)="chooseRoom(room)">
+                  <div class="centertitle">
+                    <div *ngIf="room.icon == '1'">
+                      <img src="./assets/kitchen2.png"
+                           [ngClass]="[ roomIndex == room.id ? theme == 'default' ? 'active_slideColumn' : theme == 'red' ? 'active_slideColumnRedTheme' :   theme == 'green' ? 'active_slideColumnGreenTheme' : '' : roomIndex != room.id ? theme == 'default' ? 'slideColumn' : theme == 'red' ? 'slideColumnRedTheme' :   theme == 'green' ? 'slideColumnGreenTheme' : '' :'']">
+                    </div>
+                    <div *ngIf="room.icon == '2'">
+                      <img src="./assets/bedroom-icon.png"
+                           [ngClass]="[ roomIndex == room.id ? theme == 'default' ? 'active_slideColumn' : theme == 'red' ? 'active_slideColumnRedTheme' :   theme == 'green' ? 'active_slideColumnGreenTheme' : '' : roomIndex != room.id ? theme == 'default' ? 'slideColumn' : theme == 'red' ? 'slideColumnRedTheme' :   theme == 'green' ? 'slideColumnGreenTheme' : '' :'']">
+                    </div>
+                    <div *ngIf="room.icon == '3'">
+                      <img src="./assets/Bathroom_Objects_-_Ultra_Color_-_002_-_Toilet_Side-512.png"
+                           [ngClass]="[ roomIndex == room.id ? theme == 'default' ? 'active_slideColumn' : theme == 'red' ? 'active_slideColumnRedTheme' :   theme == 'green' ? 'active_slideColumnGreenTheme' : '' : roomIndex != room.id ? theme == 'default' ? 'slideColumn' : theme == 'red' ? 'slideColumnRedTheme' :   theme == 'green' ? 'slideColumnGreenTheme' : '' :'']">
+                    </div>
+                    <div *ngIf="room.icon == '4'">
+                      <img src="./assets/livingRoomIcon.png"
+                           [ngClass]="[ roomIndex == room.id ? theme == 'default' ? 'active_slideColumn' : theme == 'red' ? 'active_slideColumnRedTheme' :   theme == 'green' ? 'active_slideColumnGreenTheme' : '' : roomIndex != room.id ? theme == 'default' ? 'slideColumn' : theme == 'red' ? 'slideColumnRedTheme' :   theme == 'green' ? 'slideColumnGreenTheme' : '' :'']">
+                    </div>
+                    <div *ngIf="room.icon == '5'">
+                      <img src="./assets/dinnerRoomIcon.png"
+                           [ngClass]="[ roomIndex == room.id ? theme == 'default' ? 'active_slideColumn' : theme == 'red' ? 'active_slideColumnRedTheme' :   theme == 'green' ? 'active_slideColumnGreenTheme' : '' : roomIndex != room.id ? theme == 'default' ? 'slideColumn' : theme == 'red' ? 'slideColumnRedTheme' :   theme == 'green' ? 'slideColumnGreenTheme' : '' :'']">
+                    </div>
+                    <div *ngIf="room.icon == '6'">
+                      <img src="./assets/garageIcon.png"
+                           [ngClass]="[ roomIndex == room.id ? theme == 'default' ? 'active_slideColumn' : theme == 'red' ? 'active_slideColumnRedTheme' :   theme == 'green' ? 'active_slideColumnGreenTheme' : '' : roomIndex != room.id ? theme == 'default' ? 'slideColumn' : theme == 'red' ? 'slideColumnRedTheme' :   theme == 'green' ? 'slideColumnGreenTheme' : '' :'']">
+                    </div>
+                    <div *ngIf="room.icon == '7'">
+                      <img src="./assets/garden.png"
+                           [ngClass]="[ roomIndex == room.id ? theme == 'default' ? 'active_slideColumn' : theme == 'red' ? 'active_slideColumnRedTheme' :   theme == 'green' ? 'active_slideColumnGreenTheme' : '' : roomIndex != room.id ? theme == 'default' ? 'slideColumn' : theme == 'red' ? 'slideColumnRedTheme' :   theme == 'green' ? 'slideColumnGreenTheme' : '' :'']">
+                    </div>
+                  </div>
+                </ion-row>
+                <ion-row class="centertitle text margin1vh">
+                  <div class="centertitle">
+                  {{room.name}}
+                  </div>
+                </ion-row>
+              </ion-slide>
+            </ion-slides>
+          </div>
+          <!--<ion-input type='email' placeholder='Favorite' class='input-line full-width' formControlName="favorite"></ion-input>-->
+          <div style="height: 6vh">
+            <div *ngIf="isRoom">
+              <ion-input type='text' placeholder={{ownerLabel}} class='input-line full-width' formControlName="owner">
+              </ion-input>
+            </div>
+          </div>
+          <button style="margin-top: 3vh" class='ghost-round full-width' [disabled]="!roomForm.valid">
+            <ng-container *ngIf="editMode">{{editLabel}}</ng-container>
+            <ng-container *ngIf="!editMode"> {{addRoomLabel}}</ng-container>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</ion-content>

@@ -1,0 +1,33 @@
+<ion-header>
+
+        <ion-navbar>
+          <ion-title>{{editLabel}}</ion-title>
+        </ion-navbar>
+
+      </ion-header>
+
+      <ion-content [ngClass]="{ 'homepage': theme == 'default', 'homepageRedTheme': theme=='red' , 'homepageGreenTheme': theme=='green' }">
+            <div class='content'>
+              <div class='input-fields'>
+                <form [formGroup]="signUpForm" (ngSubmit)="onSubmit(signUpForm)">
+                  <ion-input type='text' placeholder={{nameLabel}} class='input-line full-width' formControlName="name"></ion-input>
+                  <ion-input type='email' placeholder={{emailLabel}} class='input-line full-width' formControlName="email"></ion-input>
+                  <div style="text-align:center">
+                    <div style="width: 80%;  display:inline-block;">
+                        <ion-input type='text' placeholder={{cityLabel}} class='input-line full-width' formControlName="city"></ion-input>
+                    </div>
+                    <div style="width: 20%;display:inline-block;vertical-align: middle;">
+                      <img src="./assets/locationpng.png"   (click)="getLocation()" class="iconsHome">
+                    </div>
+                  </div>
+                  <div formGroupName="passwords">
+                  <ion-input type='password' placeholder={{passwordLabel}} class='input-line full-width' formControlName="password"></ion-input>
+                  <ion-input type='password' placeholder={{repeatPasswordLabel}} class='input-line full-width' formControlName="password_confirmation"></ion-input>
+                  <p class ='passwords' no-lines *ngIf="!signUpForm.controls.passwords.valid  && signUpForm.controls.passwords.controls.password_confirmation.dirty"> Passwords don't match!</p>
+                  </div>
+                  <button class='ghost-round full-width' style="margin-top: 1vh" [disabled]="!signUpForm.valid">{{saveLabel}}</button>
+                </form>
+              </div>
+        </div>
+      </ion-content>
+

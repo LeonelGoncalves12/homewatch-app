@@ -1,0 +1,130 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{devicesLabel}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content [ngClass]="{ 'homepage': theme == 'default', 'homepageRedTheme': theme=='red' , 'homepageGreenTheme': theme=='green' }">
+  <div class='content space' style="height: 100%">
+    <div *ngIf="loading" class="loadingContainter">
+      <img class="loadingElement" src="./assets/loadingGif.svg">
+    </div>
+    <div *ngIf="!loading" style="height: 100%">
+
+      <div class="div-slides2 " style=";margin-top: 2vh">
+        <ion-slides slidesPerView="3" spaceBetween="1" style="background: none" >
+          <ion-slide *ngFor="let type of types">
+            <div class="roomicon" (click)="chooseType(type)">
+              <div *ngIf="type.icon === '1'">
+                <img src="./assets/Light_color.png"
+                     [ngClass]="[ typeActive == type.icon  ? theme == 'default' ? 'active_slideColumn' : theme == 'red' ? 'active_slideColumnRedTheme' :   theme == 'green' ? 'active_slideColumnGreenTheme' : '' : typeActive != type.icon  ? theme == 'default' ? 'slideColumn' : theme == 'red' ? 'slideColumnRedTheme' :   theme == 'green' ? 'slideColumnGreenTheme' : '' :'']" >
+              </div>
+              <div *ngIf="type.icon === '2'">
+                <img src="./assets/Lock.ico"
+                     [ngClass]="[ typeActive == type.icon  ? theme == 'default' ? 'active_slideColumn' : theme == 'red' ? 'active_slideColumnRedTheme' :   theme == 'green' ? 'active_slideColumnGreenTheme' : '' : typeActive != type.icon  ? theme == 'default' ? 'slideColumn' : theme == 'red' ? 'slideColumnRedTheme' :   theme == 'green' ? 'slideColumnGreenTheme' : '' :'']" >
+              </div>
+              <div *ngIf="type.icon === '3'">
+                <img src="./assets/thermostat_icon.png"
+                     [ngClass]="[ typeActive == type.icon  ? theme == 'default' ? 'active_slideColumn' : theme == 'red' ? 'active_slideColumnRedTheme' :   theme == 'green' ? 'active_slideColumnGreenTheme' : '' : typeActive != type.icon  ? theme == 'default' ? 'slideColumn' : theme == 'red' ? 'slideColumnRedTheme' :   theme == 'green' ? 'slideColumnGreenTheme' : '' :'']" >
+              </div>
+            </div>
+            <p style="margin-top: 3px" class="centertitle text">
+              {{type.text}}
+            </p>
+          </ion-slide>
+        </ion-slides>
+      </div>
+
+      <div *ngIf="typeActive">
+        <div *ngIf="typeActive === '1'">
+
+
+          <div style="margin-top: 30px">
+            <canvas baseChart width="300" height="150px" style="border-radius: 15px; padding-top: 12px;padding-right: 5px" [datasets]="lineChartData" [labels]="lineChartLabels"
+                    [options]="lineChartOptions" [colors]="lineChartColors" [legend]="lineChartLegend"
+                    [chartType]="lineChartType"  [ngClass]="{ 'graphDefaultTheme': theme == 'default',  'graphRedTheme': theme=='red' , 'graphGreenTheme': theme=='green' }" ></canvas>
+          </div>
+
+          <div *ngFor="let light of lights; index as i" class="underSlides">
+            <ion-row style="display: table;" class="full2 " (click)=buildGraph(i)  [ngClass]="{ 'module': theme == 'default',  'moduleRedTheme': theme=='red' , 'moduleGreenTheme': theme=='green' }">
+              <ion-col style="display: table-cell; vertical-align: middle;" col-3 class="roomicon">
+                <div>
+                  <img src="./assets/Light_color.png" class="iconTimedTasks">
+                </div>
+              </ion-col>
+              <ion-col style="display: table-cell; vertical-align: middle; padding-top: 1vh;padding-bottom: 1vh">
+
+                <ion-row class="textThingsName">{{light.name}}</ion-row>
+
+                <ion-row class="textThingsRoom">{{light.room.name}}</ion-row>
+
+                <ion-row style="margin-top:17px">
+                  <div class="textThings" style="margin-right:7px">{{usageLabel}}: </div>
+                  <div class="textThings">{{light.time}}</div>
+                </ion-row>
+
+                <ion-row style="margin-top:5px">
+                  <div class="textThings" style="margin-right:7px">{{consumeLabel}}: </div>
+                  <div class="textThings">{{light.totalWatts}}</div>
+                </ion-row>
+
+                <ion-row style="margin-top:5px">
+                  <div class="textThings" style="margin-right:7px">{{consumeLabel}}/{{hourLabel}}: </div>
+                  <div class="textThings">{{light.totalPrice}}</div>
+                </ion-row>
+
+
+              </ion-col>
+            </ion-row>
+          </div>
+        </div>
+        <div *ngIf="typeActive === '2'">
+          <div *ngFor="let lock of locks" class="underSlides " style="margin-top: 30px">
+            <ion-row class="full2 "  [ngClass]="{ 'module': theme == 'default',  'moduleRedTheme': theme=='red' , 'moduleGreenTheme': theme=='green' }">
+              <ion-col col-2 class="roomicon">
+                <div>
+                  <img src="./assets/Lock.ico" class="iconTimedTasks">
+                </div>
+              </ion-col>
+              <ion-col style="margin: auto">
+                <ion-row class="textThingsName">{{lock.name}}</ion-row>
+
+                <ion-row class="textThingsRoom">{{lock.room.name}}</ion-row>
+
+                <ion-row style="margin-top:17px">
+                  <div class="textThings" style="margin-right:7px">{{timesLockedLabel}}: </div>
+                  <div class="textThings">{{lock.counter}}</div>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+          </div>
+
+        </div>
+
+        <div *ngIf="typeActive === '3'">
+          <div *ngFor="let thermostat of thermostats" class="underSlides" style="margin-top: 30px">
+            <ion-row class="full2 "  [ngClass]="{ 'module': theme == 'default',  'moduleRedTheme': theme=='red' , 'moduleGreenTheme': theme=='green' }">
+              <ion-col col-2 class="roomicon">
+                <div>
+                  <img src="./assets/thermostat_icon.png" class="iconTimedTasks">
+                </div>
+              </ion-col>
+              <ion-col style="margin: auto">
+                <ion-row class="textThingsName">{{thermostat.name}}</ion-row>
+
+                <ion-row class="textThingsRoom">{{thermostat.room.name}}</ion-row>
+
+                <ion-row style="margin-top:17px">
+                  <div class="textThings" style="margin-right:7px">{{averageTemperatureLabel}}: </div>
+                  <div class="textThings">{{thermostat.temperatureAVG}}</div>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

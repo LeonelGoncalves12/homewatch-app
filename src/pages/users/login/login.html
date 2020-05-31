@@ -1,0 +1,20 @@
+<ion-header>
+
+</ion-header>
+<ion-content class=' window ' [ngClass]="{ 'homepage': theme == 'default', 'homepageRedTheme': theme=='red' , 'homepageGreenTheme': theme=='green' }">
+
+  <div class='content'>
+      <div class='welcome'>HOMEWATCH</div>
+      <div class='subtitle'>Control your homes.</div>
+      <div class='input-fields'>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm)">
+          <ion-input type='email' placeholder='Email' class='input-line full-width' formControlName="email"></ion-input>
+          <ion-input type='password' placeholder='Password' class='input-line full-width' formControlName="password"></ion-input>
+
+          <button class='ghost-round full-width' type="submit" [disabled]="!loginForm.valid" style="margin-top: 1vh">Login</button>
+        </form>
+      </div>
+
+      <div class='spacing'>Don't have an account? Sign up <span class='highlight' (click)="goToSignUp()">HERE</span></div>
+    </div>
+</ion-content>

@@ -1,0 +1,65 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>
+      <div *ngIf="editMode; else new">{{editLabel}}</div>
+      <ng-template #new>{{addHomeLabel}}</ng-template>
+    </ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content
+  [ngClass]="{ 'homepage': theme == 'default', 'homepageRedTheme': theme=='red' , 'homepageGreenTheme': theme=='green' }">
+
+  <div class='content'>
+    <div [hidden]="loading" style="margin-top: 1vh">
+      <button *ngIf="editMode" style="float: right;position: absolute; right: 5%;" class='seeall'
+              [ngClass]="{ 'seeallDefaultTheme': theme == 'default', 'seeallRedTheme': theme=='red' , 'seeallGreenTheme': theme=='green' }"
+              (click)="removeHome()">{{deleteHomeLabel}}
+      </button>
+    </div>
+    <div class='input-fields' style="height: 100%;margin-top: 4vh;">
+      <div [hidden]="!loading" class="loadingContainter">
+        <img class="loadingElement" src="./assets/loadingGif.svg">
+      </div>
+      <div [hidden]="loading" style="height: 100%">
+        <ion-row style="height:25vh;">
+          <ion-col col-3> </ion-col>
+          <ion-col col-6 >
+            <ion-row>
+              <img (click)="getPicFromCamera()" style="width: 3vh;margin-left: auto; margin-right: 5px" src="./assets/camera.jpg">
+              <img  (click)="getPicFromGallery()" style="width: 3vh; margin-right: 11px" src="./assets/gallery.png">
+            </ion-row>
+            <ion-row><img #uploadedIMG src="./assets/Home-icon (2).png" style="margin-top: 2px" class="imageHome"></ion-row>
+          </ion-col>
+          <ion-col col-3>
+          </ion-col>
+        </ion-row>
+
+
+
+
+        <form [formGroup]="homeForm" (ngSubmit)="onSubmit(homeForm)" >
+          <ion-input type='text' placeholder={{nameLabel}} class='input-line full-width'
+                     formControlName="name"></ion-input>
+          <ion-input type='email' placeholder={{locationLabel}} class='input-line full-width'
+                     formControlName="location"></ion-input>
+          <ion-input type='text' placeholder={{addressLabel}} class='input-line full-width'
+                     formControlName="address"></ion-input>
+
+
+              <ion-input type='text' placeholder={{tunnelLabel}} class='input-line full-width'
+                         formControlName="tunnel"></ion-input>
+
+
+          <button class='ghost-round full-width' [disabled]="!homeForm.valid">
+            <ng-container *ngIf="editMode">{{editLabel}}</ng-container>
+            <ng-container *ngIf="!editMode">{{addHomeLabel}}</ng-container>
+          </button>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</ion-content>

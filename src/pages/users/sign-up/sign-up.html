@@ -1,0 +1,25 @@
+<ion-header>
+
+</ion-header>
+
+<ion-content class='window ' [ngClass]="{ 'homepage': theme == 'default', 'homepageRedTheme': theme=='red' , 'homepageGreenTheme': theme=='green' }">
+  <div class='content'>
+    <div class='welcome'>HOMEWATCH</div>
+    <div class='subtitle'>Control your homes.</div>
+        <div class='input-fields'>
+          <form [formGroup]="signUpForm" (ngSubmit)="onSubmit(signUpForm)">
+            <ion-input type='text' placeholder='Name' class='input-line full-width' formControlName="name"></ion-input>
+            <ion-input type='email' placeholder='Email' class='input-line full-width' formControlName="email"></ion-input>
+            <ion-input type='text' placeholder='City' class='input-line full-width' formControlName="city"></ion-input>
+            <div formGroupName="passwords">
+            <ion-input type='password' placeholder='Password' class='input-line full-width' formControlName="password"></ion-input>
+            <ion-input type='password' placeholder='Repeat Password' class='input-line full-width' formControlName="password_confirmation"></ion-input>
+            <p class ='passwords' no-lines *ngIf="!signUpForm.controls.passwords.valid  && signUpForm.controls.passwords.controls.password_confirmation.dirty"> Passwords don't match!</p>
+            </div>
+            <button class='ghost-round full-width' style="margin-top: 1vh" [disabled]="!signUpForm.valid">Create Account</button>
+          </form>
+        </div>
+
+        <div class='spacing'>Already have an account? Log in <span class='highlight' (click)="goToLogin()">HERE</span></div>
+  </div>
+</ion-content>
